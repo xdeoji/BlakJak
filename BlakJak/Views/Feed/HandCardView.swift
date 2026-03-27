@@ -1,26 +1,25 @@
 import SwiftUI
 
-let cardW: CGFloat = 54
-let cardH: CGFloat = 78
+let cardW: CGFloat = 64
+let cardH: CGFloat = 92
 
 func cardOverlap(for count: Int) -> CGFloat {
     switch count {
-    case ...2: return -14
-    case 3:    return -28
-    case 4:    return -34
-    default:   return -38
+    case ...2: return -18
+    case 3:    return -32
+    case 4:    return -40
+    default:   return -44
     }
 }
 
 struct HandCardView: View {
     let hand: BlackjackHand
-    @ObservedObject var feedVM: FeedViewModel
     @State private var appeared = false
 
     var body: some View {
         ZStack {
             CasinoTheme.bg.ignoresSafeArea()
-            previewContent
+            content
         }
         .clipped()
         .onAppear {
@@ -31,7 +30,7 @@ struct HandCardView: View {
         .onDisappear { appeared = false }
     }
 
-    private var previewContent: some View {
+    private var content: some View {
         VStack(spacing: 0) {
             Spacer()
 
@@ -40,7 +39,7 @@ struct HandCardView: View {
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(CasinoTheme.textTertiary)
                     .tracking(2)
-                HStack(spacing: -14) {
+                HStack(spacing: -18) {
                     PlayingCardView(card: hand.dealerUpcard, width: cardW, height: cardH)
                     PlayingCardView(card: hand.dealerHoleCard, isFaceDown: true, width: cardW, height: cardH)
                 }
@@ -48,7 +47,7 @@ struct HandCardView: View {
             .opacity(appeared ? 1 : 0)
             .offset(y: appeared ? 0 : -20)
 
-            Spacer().frame(height: 28)
+            Spacer().frame(height: 32)
 
             MultiplierBadge(multiplier: hand.multiplier)
                 .opacity(appeared ? 1 : 0)
@@ -58,7 +57,7 @@ struct HandCardView: View {
                 .padding(.top, 8)
                 .opacity(appeared ? 1 : 0)
 
-            Spacer().frame(height: 28)
+            Spacer().frame(height: 32)
 
             previewPlayerSection
                 .opacity(appeared ? 1 : 0)
@@ -66,17 +65,8 @@ struct HandCardView: View {
 
             Spacer()
 
-            if feedVM.isPlayed(hand.id) {
-                Text("Played")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundColor(CasinoTheme.textTertiary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .opacity(appeared ? 1 : 0)
-                Spacer().frame(height: 44)
-            } else {
-                Spacer().frame(height: 140)
-            }
+            // Fixed bottom spacer — same height always for consistent paging
+            Spacer().frame(height: 140)
         }
         .padding(.horizontal, 24)
     }
@@ -132,5 +122,4 @@ struct HandCardView: View {
                 .overlay(Capsule().strokeBorder(CasinoTheme.border, lineWidth: 1))
         )
     }
-
 }

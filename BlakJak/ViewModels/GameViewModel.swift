@@ -37,25 +37,37 @@ class GameViewModel: ObservableObject {
 
     private func checkDealerBlackjack() {
         guard dealerHand.isBlackjack else { return }
-        // Dealer has blackjack — reveal immediately
-        dealerHoleRevealed = true
-        SoundManager.shared.cardFlip()
-        Haptics.tap()
+        phase = .dealerTurn
 
-        if playerHands[0].isBlackjack {
-            // Both have blackjack — push
-            payout = Int(Double(betAmount) * ProbabilityEngine.pushReturnRate)
-            message = "PUSH"
-            Haptics.warning()
-            SoundManager.shared.push()
-            phase = .resolved(.push)
-        } else {
-            // Dealer wins
-            payout = 0
-            message = "DEALER BLACKJACK"
-            Haptics.error()
-            SoundManager.shared.lose()
-            phase = .resolved(.playerLoses)
+        Task {
+            // Dramatic pause before reveal
+            try? await Task.sleep(for: .milliseconds(800))
+
+            withAnimation(.spring(response: 0.4)) {
+                dealerHoleRevealed = true
+            }
+            SoundManager.shared.cardFlip()
+            Haptics.tap()
+
+            try? await Task.sleep(for: .milliseconds(600))
+
+            if playerHands[0].isBlackjack {
+                payout = Int(Double(betAmount) * ProbabilityEngine.pushReturnRate)
+                message = "PUSH"
+                Haptics.warning()
+                SoundManager.shared.push()
+                withAnimation(.spring(response: 0.5)) {
+                    phase = .resolved(.push)
+                }
+            } else {
+                payout = 0
+                message = "DEALER BLACKJACK"
+                Haptics.error()
+                SoundManager.shared.lose()
+                withAnimation(.spring(response: 0.5)) {
+                    phase = .resolved(.playerLoses)
+                }
+            }
         }
     }
 

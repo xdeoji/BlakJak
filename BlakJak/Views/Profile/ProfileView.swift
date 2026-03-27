@@ -30,6 +30,9 @@ struct ProfileView: View {
                     // Streaks
                     streakSettings
 
+                    // Settings
+                    gameSettings
+
                     Spacer().frame(height: 40)
                 }
                 .padding(.horizontal, 20)
@@ -309,5 +312,43 @@ struct ProfileView: View {
                 .font(.system(size: 14, weight: .semibold, design: .monospaced))
                 .foregroundColor(.white)
         }
+    }
+
+    @State private var riskyConfirm = SettingsStore.riskyActionConfirm
+
+    private var gameSettings: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("SETTINGS")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(CasinoTheme.textTertiary)
+                .tracking(1.5)
+
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Confirm Risky Actions")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.white)
+                    Text("Ask before hitting or doubling on 17+")
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(CasinoTheme.textTertiary)
+                }
+                Spacer()
+                Toggle("", isOn: $riskyConfirm)
+                    .labelsHidden()
+                    .tint(CasinoTheme.success)
+                    .onChange(of: riskyConfirm) { _, val in
+                        SettingsStore.riskyActionConfirm = val
+                    }
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(CasinoTheme.bgCard)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .strokeBorder(CasinoTheme.border, lineWidth: 1)
+                )
+        )
     }
 }

@@ -1,9 +1,9 @@
 import Foundation
 
 struct BlackjackRules {
-    /// Dealer must hit on soft 17 or below
+    /// Dealer stands on all 17s (including soft 17)
     static func dealerShouldHit(_ hand: Hand) -> Bool {
-        hand.value < 17 || (hand.value == 17 && hand.isSoft)
+        hand.value < 17
     }
 
     /// Play out the dealer's hand, drawing from the deck

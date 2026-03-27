@@ -5,8 +5,8 @@ struct FeedView: View {
     @StateObject private var walletVM = WalletViewModel()
     @StateObject private var streakVM = StreakViewModel()
     @State private var showProfile = false
-    @State private var scrolledID: UUID?
     @State private var activeGame: ActiveGame?
+    @State private var currentPage = 0
 
     struct ActiveGame {
         let hand: BlackjackHand
@@ -14,10 +14,8 @@ struct FeedView: View {
     }
 
     private var currentHand: BlackjackHand? {
-        guard let id = scrolledID else {
-            return feedVM.hands.first
-        }
-        return feedVM.hands.first(where: { $0.id == id })
+        guard currentPage < feedVM.hands.count else { return nil }
+        return feedVM.hands[currentPage]
     }
 
     private var currentHandIsPlayable: Bool {
@@ -30,23 +28,18 @@ struct FeedView: View {
             CasinoTheme.bg.ignoresSafeArea()
 
             // Feed
-            ScrollView(.vertical) {
-                LazyVStack(spacing: 0) {
-                    ForEach(feedVM.hands) { hand in
-                        HandCardView(hand: hand, feedVM: feedVM)
-                            .containerRelativeFrame(.vertical)
-                            .clipped()
-                            .onAppear {
-                                feedVM.loadMoreIfNeeded(hand: hand)
-                            }
-                    }
-                }
-                .scrollTargetLayout()
+            VerticalPager(
+                currentPage: $currentPage,
+                pageCount: feedVM.hands.count,
+                content: { index in
+                    HandCardView(hand: feedVM.hands[index])
+                },
+                isScrollEnabled: activeGame == nil
+            )
+            .ignoresSafeArea()
+            .onChange(of: currentPage) { _, newPage in
+                feedVM.loadMoreIfNeeded(currentIndex: newPage)
             }
-            .scrollTargetBehavior(.paging)
-            .scrollIndicators(.hidden)
-            .scrollPosition(id: $scrolledID)
-            .scrollDisabled(activeGame != nil)
 
             // Game overlay
             if let game = activeGame {
@@ -61,8 +54,15 @@ struct FeedView: View {
                             activeGame = nil
                             walletVM.isInGame = false
                         }
+                        // Advance to next hand
+                        if currentPage + 1 < feedVM.hands.count {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                                currentPage += 1
+                            }
+                        }
                     }
                 )
+                .ignoresSafeArea()
                 .background(CasinoTheme.bg)
                 .transition(.opacity)
             }

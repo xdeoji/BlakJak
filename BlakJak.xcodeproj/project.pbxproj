@@ -15,6 +15,7 @@
 		29E431921133F5C89CDDF0B8 /* BlakJakApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01AEE01FAFCAC4CB94BF95A6 /* BlakJakApp.swift */; };
 		36CDAB89DC17CC00A3953F83 /* BlackjackHand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513325BCF8282BBBD16BC953 /* BlackjackHand.swift */; };
 		393741F40A3503A2D460ECB9 /* WalletStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E406BEB07E5C5A3EE8213EC0 /* WalletStore.swift */; };
+		3A5313B69ED4A16FF9BD2CED /* VerticalPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBC90FEACAE955D4CAAFEEB /* VerticalPager.swift */; };
 		537BF831A6922C75FF70FE16 /* StreakViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7691AE889EFB6347F88F34C0 /* StreakViewModel.swift */; };
 		596968E5AC7FEEB9008C5979 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A67E408EAADB7CF01A084 /* StatsViewModel.swift */; };
 		64CD90D1D9D2CD2E5CACBFB0 /* Hand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66062A240A74E9E0BEF2B547 /* Hand.swift */; };
@@ -35,6 +36,7 @@
 		C28A375A10A07B0132D8D519 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18649F2C1FC91764EEE830 /* FeedView.swift */; };
 		DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */; };
 		E4FF6109DF14A8E5C3D83562 /* StatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C94C5A8305C2A9F75FE78A /* StatsStore.swift */; };
+		E891450F6AE46636AFB8D85B /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D57FAC85C279358B7753 /* SettingsStore.swift */; };
 		EA6C96F80377DCFA510D69F6 /* HandGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A731453F882F5BE09D6446 /* HandGenerator.swift */; };
 		EBB69288E6E283438059BB4F /* StreakStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00174270811CD59BAEC2E461 /* StreakStore.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +48,7 @@
 		06AAF430C1AF6D2112265978 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		06E316E198BF1BB55D2606A4 /* BlakJak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlakJak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A731453F882F5BE09D6446 /* HandGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandGenerator.swift; sourceTree = "<group>"; };
+		0EBC90FEACAE955D4CAAFEEB /* VerticalPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalPager.swift; sourceTree = "<group>"; };
 		2760F91A510D046D56D2A552 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3079EF1B1B88D10C6AE1E8F4 /* BetPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetPicker.swift; sourceTree = "<group>"; };
 		3E149EB3993CB35C8249C18E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
@@ -58,6 +61,7 @@
 		836A67E408EAADB7CF01A084 /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8C43D4498942E032AE72AA41 /* BlackjackRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackRules.swift; sourceTree = "<group>"; };
 		8E5FB5F5E85D7ECB6367582A /* MultiplierBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplierBadge.swift; sourceTree = "<group>"; };
+		8EE4D57FAC85C279358B7753 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		93D939679CAA4119AC0443C8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		95C94C5A8305C2A9F75FE78A /* StatsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsStore.swift; sourceTree = "<group>"; };
 		A1136E5C7AF958641AE92479 /* BuyInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInButton.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 				CB18649F2C1FC91764EEE830 /* FeedView.swift */,
 				D90E2B0706DE03BDF875EA06 /* HandCardView.swift */,
 				80A2546612CBD44B53228000 /* InlineGameView.swift */,
+				0EBC90FEACAE955D4CAAFEEB /* VerticalPager.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -114,6 +119,7 @@
 		736D32D0D690CD82C87CD3FD /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				8EE4D57FAC85C279358B7753 /* SettingsStore.swift */,
 				95C94C5A8305C2A9F75FE78A /* StatsStore.swift */,
 				00174270811CD59BAEC2E461 /* StreakStore.swift */,
 				E406BEB07E5C5A3EE8213EC0 /* WalletStore.swift */,
@@ -291,11 +297,13 @@
 				6D2CE93F5115AE3E207B5D18 /* PlayingCardView.swift in Sources */,
 				8D1A448C9B53BA8CC71FCF2F /* ProbabilityEngine.swift in Sources */,
 				BA08B62C321E31715F77F7AB /* ProfileView.swift in Sources */,
+				E891450F6AE46636AFB8D85B /* SettingsStore.swift in Sources */,
 				E4FF6109DF14A8E5C3D83562 /* StatsStore.swift in Sources */,
 				596968E5AC7FEEB9008C5979 /* StatsViewModel.swift in Sources */,
 				002EDCBE52C7FB4AA8EA222F /* StreakBanner.swift in Sources */,
 				EBB69288E6E283438059BB4F /* StreakStore.swift in Sources */,
 				537BF831A6922C75FF70FE16 /* StreakViewModel.swift in Sources */,
+				3A5313B69ED4A16FF9BD2CED /* VerticalPager.swift in Sources */,
 				393741F40A3503A2D460ECB9 /* WalletStore.swift in Sources */,
 				DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */,
 			);

@@ -44,7 +44,7 @@ struct InlineGameView: View {
             // Controls or result
             Group {
                 if gameVM.phase == .playerTurn {
-                    GameControlsView(gameVM: gameVM)
+                    GameControlsView(gameVM: gameVM, walletVM: walletVM)
                 } else if gameVM.phase.isResolved {
                     resultView
                 } else {
@@ -60,7 +60,7 @@ struct InlineGameView: View {
             }
             .padding(.horizontal, 4)
 
-            Spacer().frame(height: 120)
+            Spacer().frame(height: 140)
         }
         .padding(.horizontal, 24)
         .onChange(of: gameVM.extraDeduction) { _, newValue in
@@ -219,27 +219,26 @@ struct InlineGameView: View {
         if activeHand.isBusted { return 0 }
         let playerVal = activeHand.value
 
-        // Once dealer hole is revealed, use exact comparison
         if gameVM.dealerHoleRevealed {
             let dealerVal = gameVM.dealerHand.value
-            if gameVM.dealerHand.isBusted { return 100 }
-            if playerVal > dealerVal { return 100 }
-            if playerVal == dealerVal { return 50 }
-            // Player is behind — can only win if dealer busts on future draws
-            if dealerVal < 17 {
-                // Dealer still drawing, estimate bust chance from current total
-                let bustChance: Double
-                switch dealerVal {
-                case ...12: bustChance = 0.30
-                case 13: bustChance = 0.35
-                case 14: bustChance = 0.40
-                case 15: bustChance = 0.45
-                case 16: bustChance = 0.50
-                default: bustChance = 0.0
-                }
-                return Int(bustChance * 100)
+            let dealerBusted = gameVM.dealerHand.isBusted
+            let dealerDone = dealerBusted || dealerVal >= 17
+
+            if dealerDone {
+                // Dealer is finished drawing — exact outcome
+                if dealerBusted { return 100 }
+                if playerVal > dealerVal { return 100 }
+                if playerVal == dealerVal { return 50 }
+                return 0
             }
-            return 0 // dealer stands with higher total
+
+            // Dealer still drawing — use probability table with known dealer total
+            // Estimate: what % of the time does the dealer end up < playerVal or bust?
+            let dealerUpcardVal = hand.dealerUpcard.rank == .ace ? 11 :
+                                  min(hand.dealerUpcard.rank.blackjackValue, 10)
+            let (pWin, pPush) = ProbabilityEngine.outcomeProbabilitiesOnStand(
+                playerTotal: playerVal, dealerUpcardValue: dealerUpcardVal)
+            return max(1, min(99, Int((pWin + pPush * 0.5) * 100)))
         }
 
         // Before reveal, use probability table
@@ -250,7 +249,8 @@ struct InlineGameView: View {
             isSoft: activeHand.isSoft,
             dealerUpcardValue: dealerUpcardVal
         )
-        return Int(prob * 100)
+        // Clamp to 1-99 to avoid showing 0% or 100% when outcome isn't certain
+        return max(1, min(99, Int(prob * 100)))
     }
 
     private var winPercentColor: Color {
