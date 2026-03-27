@@ -1,0 +1,22 @@
+# Xcode
+xcuserdata/
+*.xcscmblueprint
+DerivedData/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Build
+build/
+
+# macOS
+.DS_Store
+
+# CocoaPods
+Pods/
+
+# Swift Package Manager
+.build/
+Package.resolved
