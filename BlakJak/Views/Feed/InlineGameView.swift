@@ -96,7 +96,7 @@ struct InlineGameView: View {
             }
 
             if gameVM.dealerHoleRevealed {
-                Text("\(gameVM.dealerHand.value)")
+                Text(gameVM.dealerHand.displayValue)
                     .font(.system(size: 15, weight: .semibold, design: .monospaced))
                     .foregroundColor(CasinoTheme.textSecondary)
             }
@@ -106,53 +106,97 @@ struct InlineGameView: View {
     // MARK: - Player
 
     private var playerSection: some View {
-        VStack(spacing: gameVM.isSplit ? 14 : 0) {
-            ForEach(0..<gameVM.playerHands.count, id: \.self) { handIndex in
-                let pHand = gameVM.playerHands[handIndex]
-                let isActive = handIndex == gameVM.activeHandIndex && gameVM.phase == .playerTurn
-                let overlap = cardOverlap(for: pHand.cards.count)
-
-                VStack(spacing: 6) {
-                    HStack(spacing: overlap) {
-                        ForEach(Array(pHand.cards.enumerated()), id: \.element.id) { cardIndex, card in
-                            PlayingCardView(card: card, width: cardW, height: cardH)
-                                .zIndex(Double(cardIndex))
-                        }
-                    }
-
-                    HStack(spacing: 6) {
-                        if gameVM.isSplit {
-                            Text("HAND \(handIndex + 1)")
-                                .font(.system(size: 10, weight: .medium))
-                                .foregroundColor(CasinoTheme.textTertiary)
-                                .tracking(1)
-                        } else {
-                            Text("YOU")
-                                .font(.system(size: 11, weight: .medium))
-                                .foregroundColor(CasinoTheme.textTertiary)
-                                .tracking(2)
-                        }
-                        Text("\(pHand.value)")
-                            .font(.system(size: 17, weight: .semibold, design: .monospaced))
-                            .foregroundColor(pHand.isBusted ? CasinoTheme.danger : .white)
-
-                        if gameVM.isDoubledDown[handIndex] {
-                            Text("2x")
-                                .font(.system(size: 11, weight: .semibold, design: .monospaced))
-                                .foregroundColor(CasinoTheme.textTertiary)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(
-                                    Capsule()
-                                        .fill(CasinoTheme.bgElevated)
-                                        .overlay(Capsule().strokeBorder(CasinoTheme.border, lineWidth: 1))
-                                )
-                        }
-                    }
-                }
-                .opacity(gameVM.isSplit && !isActive && gameVM.phase == .playerTurn ? 0.4 : 1.0)
+        Group {
+            if gameVM.isSplit {
+                splitCarousel
+            } else {
+                singleHandView(hand: gameVM.playerHands[0], index: 0, isActive: true)
             }
         }
+    }
+
+    private var splitCarousel: some View {
+        GeometryReader { geo in
+            let handWidth: CGFloat = 140
+            let spacing: CGFloat = 12
+            let totalWidth = handWidth + spacing
+            let centerOffset = (geo.size.width - handWidth) / 2
+            let xOffset = centerOffset - CGFloat(gameVM.activeHandIndex) * totalWidth
+
+            HStack(spacing: spacing) {
+                ForEach(0..<gameVM.playerHands.count, id: \.self) { handIndex in
+                    let isActive = handIndex == gameVM.activeHandIndex
+                        && (gameVM.phase == .playerTurn || gameVM.phase == .dealerTurn || gameVM.phase.isResolved)
+                    singleHandView(hand: gameVM.playerHands[handIndex], index: handIndex, isActive: isActive)
+                        .frame(width: handWidth)
+                }
+            }
+            .offset(x: xOffset)
+            .animation(.spring(response: 0.4, dampingFraction: 0.85), value: gameVM.activeHandIndex)
+        }
+        .frame(height: cardH + 40)
+        .padding(.horizontal, -24)
+    }
+
+    private func singleHandView(hand: Hand, index: Int, isActive: Bool) -> some View {
+        let overlap = cardOverlap(for: hand.cards.count)
+
+        return VStack(spacing: 6) {
+            HStack(spacing: overlap) {
+                ForEach(Array(hand.cards.enumerated()), id: \.element.id) { cardIndex, card in
+                    PlayingCardView(card: card, width: cardW, height: cardH)
+                        .zIndex(Double(cardIndex))
+                }
+            }
+
+            HStack(spacing: 6) {
+                if gameVM.isSplit {
+                    Text("\(index + 1)")
+                        .font(.system(size: 11, weight: .bold, design: .monospaced))
+                        .foregroundColor(isActive ? .white : CasinoTheme.textTertiary)
+                        .frame(width: 18, height: 18)
+                        .background(
+                            Circle()
+                                .fill(isActive ? CasinoTheme.bgElevated : Color.clear)
+                                .overlay(Circle().strokeBorder(CasinoTheme.border, lineWidth: 1))
+                        )
+                } else {
+                    Text("YOU")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundColor(CasinoTheme.textTertiary)
+                        .tracking(2)
+                }
+                Text(hand.displayValue)
+                    .font(.system(size: 17, weight: .semibold, design: .monospaced))
+                    .foregroundColor(hand.isBusted ? CasinoTheme.danger : .white)
+
+                if gameVM.isDoubledDown[index] {
+                    Text("2x")
+                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                        .foregroundColor(CasinoTheme.textTertiary)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(CasinoTheme.bgElevated)
+                                .overlay(Capsule().strokeBorder(CasinoTheme.border, lineWidth: 1))
+                        )
+                }
+            }
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 4)
+        .background(
+            gameVM.isSplit ?
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isActive ? CasinoTheme.bgElevated.opacity(0.5) : Color.clear)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(isActive ? CasinoTheme.borderLight : Color.clear, lineWidth: 1)
+                    )
+                : nil
+        )
+        .opacity(gameVM.isSplit && !isActive && gameVM.phase == .playerTurn ? 0.5 : 1.0)
     }
 
     // MARK: - Bet Info
@@ -255,7 +299,7 @@ struct InlineGameView: View {
 
     private var winPercentColor: Color {
         if liveWinPercent >= 60 { return CasinoTheme.success }
-        if liveWinPercent >= 40 { return .white }
+        if liveWinPercent >= 40 { return CasinoTheme.warning }
         return CasinoTheme.danger
     }
 

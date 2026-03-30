@@ -87,39 +87,35 @@ struct HandCardView: View {
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(CasinoTheme.textTertiary)
                     .tracking(2)
-                Text("\(hand.playerTotal)")
+                Text(hand.playerHand.displayValue)
                     .font(.system(size: 16, weight: .semibold, design: .monospaced))
                     .foregroundColor(.white)
             }
         }
     }
 
-    private var handInfo: some View {
-        HStack(spacing: 12) {
-            infoChip(label: "\(Int(hand.winProbability * 100))%", sublabel: "win")
-            if hand.playerIsSoft {
-                infoChip(label: "soft", sublabel: nil)
-            }
-        }
+    private var winPctColor: Color {
+        let pct = Int(hand.winProbability * 100)
+        if pct >= 60 { return CasinoTheme.success }
+        if pct >= 40 { return CasinoTheme.warning }
+        return CasinoTheme.danger
     }
 
-    private func infoChip(label: String, sublabel: String?) -> some View {
-        HStack(spacing: 3) {
-            Text(label)
-                .font(.system(size: 12, weight: .medium, design: .monospaced))
-                .foregroundColor(CasinoTheme.textSecondary)
-            if let sub = sublabel {
-                Text(sub)
-                    .font(.system(size: 11, weight: .regular))
-                    .foregroundColor(CasinoTheme.textTertiary)
-            }
+    private var handInfo: some View {
+        HStack(spacing: 4) {
+            Text("\(Int(hand.winProbability * 100))%")
+                .font(.system(size: 12, weight: .bold, design: .monospaced))
+                .foregroundColor(winPctColor)
+            Text("win")
+                .font(.system(size: 11, weight: .regular))
+                .foregroundColor(winPctColor.opacity(0.6))
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
         .background(
             Capsule()
-                .fill(CasinoTheme.bgElevated)
-                .overlay(Capsule().strokeBorder(CasinoTheme.border, lineWidth: 1))
+                .fill(winPctColor.opacity(0.1))
+                .overlay(Capsule().strokeBorder(winPctColor.opacity(0.2), lineWidth: 1))
         )
     }
 }

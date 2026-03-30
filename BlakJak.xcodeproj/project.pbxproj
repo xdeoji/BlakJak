@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		002EDCBE52C7FB4AA8EA222F /* StreakBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D938DC5BD8D69EC42E0F6624 /* StreakBanner.swift */; };
 		0077668A15FB399B8AD76524 /* BuyInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1136E5C7AF958641AE92479 /* BuyInButton.swift */; };
+		010A6821970CF33CF664DBBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 130CBF49B62F73BA09B65350 /* Assets.xcassets */; };
 		1435B7819190A6F9916F5F79 /* GameControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013F55C532A929F6116C2005 /* GameControlsView.swift */; };
 		1CB89A0B5194C6B6822675DE /* MultiplierBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5FB5F5E85D7ECB6367582A /* MultiplierBadge.swift */; };
 		234C1111DA70E51A1C8CBB68 /* InlineGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A2546612CBD44B53228000 /* InlineGameView.swift */; };
@@ -49,6 +50,7 @@
 		06E316E198BF1BB55D2606A4 /* BlakJak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlakJak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A731453F882F5BE09D6446 /* HandGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandGenerator.swift; sourceTree = "<group>"; };
 		0EBC90FEACAE955D4CAAFEEB /* VerticalPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalPager.swift; sourceTree = "<group>"; };
+		130CBF49B62F73BA09B65350 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2760F91A510D046D56D2A552 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3079EF1B1B88D10C6AE1E8F4 /* BetPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetPicker.swift; sourceTree = "<group>"; };
 		3E149EB3993CB35C8249C18E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		98274D7A128BF46577BF63D3 /* BlakJak */ = {
 			isa = PBXGroup;
 			children = (
+				130CBF49B62F73BA09B65350 /* Assets.xcassets */,
 				01AEE01FAFCAC4CB94BF95A6 /* BlakJakApp.swift */,
 				CE691C9C040790904981C666 /* Engine */,
 				7C09DE8FE064A54084D0F945 /* Models */,
@@ -229,6 +232,7 @@
 			buildConfigurationList = 4F19AE9190E98D7E32AED08A /* Build configuration list for PBXNativeTarget "BlakJak" */;
 			buildPhases = (
 				E1533B4741AE6A893BBB35EC /* Sources */,
+				B57E54CA049FB07C9E149321 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -268,6 +272,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B57E54CA049FB07C9E149321 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				010A6821970CF33CF664DBBD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E1533B4741AE6A893BBB35EC /* Sources */ = {

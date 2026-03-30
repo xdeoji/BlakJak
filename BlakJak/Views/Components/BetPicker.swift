@@ -5,25 +5,48 @@ struct BetPicker: View {
     let balance: Int
     let onBuyIn: () -> Void
 
-    @State private var isCustom = false
+    @State private var isEditingCustom = false
     @State private var customText = ""
-    @FocusState private var customFocused: Bool
+    @State private var customAmount: Int = SettingsStore.customBetAmount
 
-    private var presets: [Int] {
-        if balance >= 1000 {
-            return [25, 100, 250]
-        } else if balance >= 500 {
-            return [25, 50, 100]
-        } else if balance >= 100 {
-            return [10, 25, 50]
-        } else {
-            return [10, 25, 50].filter { $0 <= balance }
+    private let pctTiers: [(label: String, pct: Double)] = [
+        ("2%", 0.02), ("5%", 0.05), ("10%", 0.10), ("25%", 0.25), ("50%", 0.50)
+    ]
+
+    private var presets: [(label: String, value: Int)] {
+        var result: [(label: String, value: Int)] = []
+        for tier in pctTiers {
+            let raw = Int(Double(balance) * tier.pct)
+            let nice = max(10, roundToNice(raw))
+            if nice <= balance {
+                // Avoid duplicates
+                if !result.contains(where: { $0.value == nice }) {
+                    result.append((tier.label, nice))
+                }
+            }
+        }
+        if result.isEmpty { result = [("MIN", 10)] }
+        return result
+    }
+
+    private func roundToNice(_ value: Int) -> Int {
+        switch value {
+        case ..<10:      return 10
+        case ..<25:      return value / 5 * 5        // 10, 15, 20
+        case ..<100:     return value / 25 * 25       // 25, 50, 75
+        case ..<500:     return value / 50 * 50       // 100, 150, 200...
+        case ..<1000:    return value / 100 * 100     // 500, 600, 700...
+        case ..<5000:    return value / 250 * 250     // 1000, 1250, 1500...
+        case ..<10000:   return value / 500 * 500     // 5000, 5500...
+        case ..<50000:   return value / 1000 * 1000   // 10000, 11000...
+        case ..<100000:  return value / 5000 * 5000   // 50000, 55000...
+        default:         return value / 10000 * 10000
         }
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            if isCustom {
+            if isEditingCustom {
                 customInput
             } else {
                 normalPicker
@@ -53,59 +76,79 @@ struct BetPicker: View {
     }
 
     private var presetsRow: some View {
-        HStack(spacing: 8) {
-            ForEach(presets, id: \.self) { preset in
-                BetChip(label: "\(preset)", selected: amount == preset) {
-                    amount = preset
+        VStack(spacing: 8) {
+            // Percentage presets
+            HStack(spacing: 6) {
+                ForEach(presets, id: \.value) { preset in
+                    BetChip(label: preset.label, sublabel: "\(preset.value)", selected: amount == preset.value) {
+                        amount = preset.value
+                    }
                 }
-                .disabled(preset > balance)
-                .opacity(preset > balance ? 0.3 : 1.0)
             }
 
-            BetChip(label: "All In", selected: amount == balance) {
-                amount = balance
+            // Custom + All In
+            HStack(spacing: 6) {
+                // Custom — tap to select, long press to edit
+                Button {
+                    let clamped = min(customAmount, balance)
+                    if clamped >= 10 {
+                        amount = clamped
+                    }
+                } label: {
+                    VStack(spacing: 1) {
+                        Image(systemName: "pencil")
+                            .font(.system(size: 10, weight: .semibold))
+                            .foregroundColor(amount == customAmount ? .black.opacity(0.6) : CasinoTheme.accent)
+                        Text("\(min(customAmount, balance))")
+                            .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                            .foregroundColor(amount == customAmount ? .black : CasinoTheme.textSecondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(amount == customAmount ? Color.white : CasinoTheme.bgElevated)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(
+                                amount == customAmount ? Color.clear : CasinoTheme.accent.opacity(0.3),
+                                lineWidth: 1
+                            )
+                    )
+                }
+                .buttonStyle(.plain)
+                .simultaneousGesture(
+                    LongPressGesture(minimumDuration: 0.4).onEnded { _ in
+                        Haptics.medium()
+                        withAnimation(.easeOut(duration: 0.25)) {
+                            isEditingCustom = true
+                        }
+                    }
+                )
+
+                BetChip(label: "All In", sublabel: "\(balance)", selected: amount == balance) {
+                    amount = balance
+                }
             }
         }
     }
 
     private var buyInRow: some View {
-        HStack(spacing: 8) {
-            Button {
-                withAnimation(.easeOut(duration: 0.25)) {
-                    isCustom = true
-                }
-            } label: {
-                Text("\(amount)")
-                    .font(.system(size: 15, weight: .semibold, design: .monospaced))
-                    .foregroundColor(.white)
-                    .frame(width: 80)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(CasinoTheme.bgElevated)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .strokeBorder(CasinoTheme.borderLight, lineWidth: 1)
-                            )
-                    )
-            }
-            .buttonStyle(.plain)
-
-            Button(action: onBuyIn) {
-                Text("Buy In · \(amount) pts")
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(.black)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(.white)
-                    )
-            }
-            .buttonStyle(.plain)
-            .disabled(amount > balance)
-            .opacity(amount > balance ? 0.4 : 1.0)
+        Button(action: onBuyIn) {
+            Text("Buy In · \(amount) pts")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(.black)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.white)
+                )
         }
+        .buttonStyle(.plain)
+        .disabled(amount > balance)
+        .opacity(amount > balance ? 0.4 : 1.0)
     }
 
     // MARK: - Custom Input
@@ -116,7 +159,7 @@ struct BetPicker: View {
             HStack {
                 Button {
                     withAnimation(.easeOut(duration: 0.2)) {
-                        isCustom = false
+                        isEditingCustom = false
                     }
                 } label: {
                     Image(systemName: "xmark")
@@ -212,10 +255,12 @@ struct BetPicker: View {
 
     private func applyCustom() {
         if let val = Int(customText), val >= 10, val <= balance {
+            customAmount = val
             amount = val
+            SettingsStore.customBetAmount = val
         }
         withAnimation(.easeOut(duration: 0.25)) {
-            isCustom = false
+            isEditingCustom = false
         }
     }
 }
@@ -224,27 +269,35 @@ struct BetPicker: View {
 
 struct BetChip: View {
     let label: String
+    var sublabel: String? = nil
     let selected: Bool
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            Text(label)
-                .font(.system(size: 13, weight: .semibold, design: .monospaced))
-                .foregroundColor(selected ? .black : CasinoTheme.textSecondary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(selected ? Color.white : CasinoTheme.bgElevated)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .strokeBorder(
-                            selected ? Color.clear : CasinoTheme.border,
-                            lineWidth: 1
-                        )
-                )
+            VStack(spacing: 1) {
+                Text(label)
+                    .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                    .foregroundColor(selected ? .black : CasinoTheme.textSecondary)
+                if let sub = sublabel {
+                    Text(sub)
+                        .font(.system(size: 10, weight: .medium, design: .monospaced))
+                        .foregroundColor(selected ? .black.opacity(0.6) : CasinoTheme.textTertiary)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(selected ? Color.white : CasinoTheme.bgElevated)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(
+                        selected ? Color.clear : CasinoTheme.border,
+                        lineWidth: 1
+                    )
+            )
         }
         .buttonStyle(.plain)
     }

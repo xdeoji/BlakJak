@@ -340,6 +340,9 @@ struct ProfileView: View {
                         SettingsStore.riskyActionConfirm = val
                     }
             }
+
+            // Reset
+            resetButton
         }
         .padding(20)
         .background(
@@ -350,5 +353,66 @@ struct ProfileView: View {
                         .strokeBorder(CasinoTheme.border, lineWidth: 1)
                 )
         )
+    }
+
+    @State private var showResetConfirm = false
+
+    private var resetButton: some View {
+        VStack(spacing: 0) {
+            Divider()
+                .background(CasinoTheme.border)
+                .padding(.vertical, 14)
+
+            Button {
+                showResetConfirm = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.counterclockwise")
+                        .font(.system(size: 13))
+                    Text("Reset Profile")
+                        .font(.system(size: 14, weight: .medium))
+                }
+                .foregroundColor(CasinoTheme.danger)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(CasinoTheme.danger.opacity(0.1))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .strokeBorder(CasinoTheme.danger.opacity(0.2), lineWidth: 1)
+                        )
+                )
+            }
+            .buttonStyle(.plain)
+            .confirmationDialog("Reset everything?", isPresented: $showResetConfirm, titleVisibility: .visible) {
+                Button("Reset", role: .destructive) {
+                    resetAll()
+                }
+            } message: {
+                Text("This will reset your balance to 1,000, clear all stats, streaks, and history. This cannot be undone.")
+            }
+        }
+    }
+
+    private func resetAll() {
+        // Balance
+        WalletStore.balance = 1000
+        walletVM.balance = 1000
+
+        // Stats
+        StatsStore.records = []
+        statsVM.reload()
+
+        // Streaks
+        StreakStore.winStreak = 0
+        StreakStore.lossStreak = 0
+        streakVM.winStreak = 0
+        streakVM.lossStreak = 0
+
+        // Settings stay as-is
+
+        Haptics.medium()
+        dismiss()
     }
 }

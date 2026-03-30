@@ -31,35 +31,64 @@ class GameViewModel: ObservableObject {
         self.multiplier = hand.multiplier
         self.isDoubledDown = [false]
         self.tookAction = [false]
-        // Check for dealer blackjack after init
-        checkDealerBlackjack()
+        // Check for instant outcomes
+        checkInstantOutcomes()
     }
 
-    private func checkDealerBlackjack() {
-        guard dealerHand.isBlackjack else { return }
-        phase = .dealerTurn
+    private func checkInstantOutcomes() {
+        let playerBJ = playerHands[0].isBlackjack  // exactly 2 cards, value 21
+        let dealerBJ = dealerHand.isBlackjack
 
-        Task {
-            // Dramatic pause before reveal
-            try? await Task.sleep(for: .milliseconds(800))
+        // Player blackjack (2-card 21) — instant win, dealer doesn't draw
+        // Unless dealer also has blackjack — then push
+        if playerBJ {
+            phase = .dealerTurn
+            Task {
+                try? await Task.sleep(for: .milliseconds(500))
 
-            withAnimation(.spring(response: 0.4)) {
-                dealerHoleRevealed = true
-            }
-            SoundManager.shared.cardFlip()
-            Haptics.tap()
-
-            try? await Task.sleep(for: .milliseconds(600))
-
-            if playerHands[0].isBlackjack {
-                payout = Int(Double(betAmount) * ProbabilityEngine.pushReturnRate)
-                message = "PUSH"
-                Haptics.warning()
-                SoundManager.shared.push()
-                withAnimation(.spring(response: 0.5)) {
-                    phase = .resolved(.push)
+                withAnimation(.spring(response: 0.4)) {
+                    dealerHoleRevealed = true
                 }
-            } else {
+                SoundManager.shared.cardFlip()
+                Haptics.tap()
+
+                try? await Task.sleep(for: .milliseconds(600))
+
+                if dealerBJ {
+                    payout = Int(Double(betAmount) * ProbabilityEngine.pushReturnRate)
+                    message = "PUSH"
+                    Haptics.warning()
+                    SoundManager.shared.push()
+                    withAnimation(.spring(response: 0.5)) {
+                        phase = .resolved(.push)
+                    }
+                } else {
+                    payout = Int(Double(betAmount) * multiplier)
+                    message = "BLACKJACK!"
+                    Haptics.success()
+                    SoundManager.shared.win()
+                    withAnimation(.spring(response: 0.5)) {
+                        phase = .resolved(.playerBlackjack)
+                    }
+                }
+            }
+            return
+        }
+
+        // Dealer blackjack (no player blackjack) — instant loss
+        if dealerBJ {
+            phase = .dealerTurn
+            Task {
+                try? await Task.sleep(for: .milliseconds(800))
+
+                withAnimation(.spring(response: 0.4)) {
+                    dealerHoleRevealed = true
+                }
+                SoundManager.shared.cardFlip()
+                Haptics.tap()
+
+                try? await Task.sleep(for: .milliseconds(600))
+
                 payout = 0
                 message = "DEALER BLACKJACK"
                 Haptics.error()
@@ -68,6 +97,7 @@ class GameViewModel: ObservableObject {
                     phase = .resolved(.playerLoses)
                 }
             }
+            return
         }
     }
 
@@ -261,7 +291,7 @@ class GameViewModel: ObservableObject {
                 totalPayout += Int(Double(handBet) * multiplier)
                 messages.append(isSplit ? "Hand \(i + 1): WIN" : "YOU WIN!")
             case .playerBlackjack:
-                totalPayout += Int(Double(handBet) * multiplier * 1.5)
+                totalPayout += Int(Double(handBet) * multiplier)
                 messages.append(isSplit ? "Hand \(i + 1): BLACKJACK" : "BLACKJACK!")
             case .playerLoses:
                 messages.append(isSplit ? "Hand \(i + 1): LOSE" : (hand.isBusted ? "BUST" : "DEALER WINS"))

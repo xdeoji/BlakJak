@@ -31,12 +31,21 @@ struct Hand {
         return aces > 0 && total <= 21
     }
 
+    /// Display string: "8/18" for soft hands, "15" for hard hands
+    var displayValue: String {
+        if isSoft {
+            let hardVal = value - 10
+            return "\(hardVal)/\(value)"
+        }
+        return "\(value)"
+    }
+
     var isBusted: Bool { value > 21 }
 
     var isBlackjack: Bool { cards.count == 2 && value == 21 }
 
     var canSplit: Bool {
-        cards.count == 2 && cards[0].rank == cards[1].rank
+        cards.count == 2 && cards[0].rank.blackjackValue == cards[1].rank.blackjackValue
     }
 
     mutating func add(_ card: Card) {
