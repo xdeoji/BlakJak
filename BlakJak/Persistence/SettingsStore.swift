@@ -3,7 +3,13 @@ import Foundation
 struct SettingsStore {
     private static let riskyConfirmKey = "blakjak_risky_confirm"
 
+    private static let onboardedKey = "blakjak_onboarded"
     private static let customBetKey = "blakjak_custom_bet"
+
+    static var hasOnboarded: Bool {
+        get { UserDefaults.standard.bool(forKey: onboardedKey) }
+        set { UserDefaults.standard.set(newValue, forKey: onboardedKey) }
+    }
 
     static var customBetAmount: Int {
         get {

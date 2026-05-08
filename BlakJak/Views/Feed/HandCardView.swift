@@ -101,21 +101,44 @@ struct HandCardView: View {
         return CasinoTheme.danger
     }
 
+    private var isStreakEligible: Bool {
+        hand.winProbability < 0.60
+    }
+
     private var handInfo: some View {
-        HStack(spacing: 4) {
-            Text("\(Int(hand.winProbability * 100))%")
-                .font(.system(size: 12, weight: .bold, design: .monospaced))
-                .foregroundColor(winPctColor)
-            Text("win")
-                .font(.system(size: 11, weight: .regular))
-                .foregroundColor(winPctColor.opacity(0.6))
+        HStack(spacing: 8) {
+            HStack(spacing: 4) {
+                Text("\(Int(hand.winProbability * 100))%")
+                    .font(.system(size: 12, weight: .bold, design: .monospaced))
+                    .foregroundColor(winPctColor)
+                Text("win")
+                    .font(.system(size: 11, weight: .regular))
+                    .foregroundColor(winPctColor.opacity(0.6))
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(
+                Capsule()
+                    .fill(winPctColor.opacity(0.1))
+                    .overlay(Capsule().strokeBorder(winPctColor.opacity(0.2), lineWidth: 1))
+            )
+
+            if isStreakEligible {
+                HStack(spacing: 3) {
+                    Image(systemName: "flame.fill")
+                        .font(.system(size: 10))
+                    Text("streak")
+                        .font(.system(size: 11, weight: .medium, design: .monospaced))
+                }
+                .foregroundColor(CasinoTheme.success)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 5)
+                .background(
+                    Capsule()
+                        .fill(CasinoTheme.success.opacity(0.1))
+                        .overlay(Capsule().strokeBorder(CasinoTheme.success.opacity(0.2), lineWidth: 1))
+                )
+            }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 5)
-        .background(
-            Capsule()
-                .fill(winPctColor.opacity(0.1))
-                .overlay(Capsule().strokeBorder(winPctColor.opacity(0.2), lineWidth: 1))
-        )
     }
 }

@@ -29,6 +29,12 @@
 		8B58813E19ABE93C12FF66BE /* BlackjackRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C43D4498942E032AE72AA41 /* BlackjackRules.swift */; };
 		8D1A448C9B53BA8CC71FCF2F /* ProbabilityEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4066109115009055A3F656F6 /* ProbabilityEngine.swift */; };
 		8DF8D69E578904CB6FA99F33 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2760F91A510D046D56D2A552 /* Card.swift */; };
+		A24F7DEDFA944CCA3BFFFF59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */; };
+		AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001AA000001AA000001 /* DailyBonusStore.swift */; };
+		AA000004AA000004AA000004 /* ChipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AA000003AA000003 /* ChipStore.swift */; };
+		AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000005AA000005AA000005 /* RewardedAdManager.swift */; };
+		AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000007AA000007AA000007 /* BrokeSheet.swift */; };
+		AA00000AAA00000AAA00000A /* DailyBonusSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000009AA000009AA000009 /* DailyBonusSheet.swift */; };
 		AC2A4160E1B7C67E91A09DA0 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62482A310A0A5B1DC8B9148 /* BalanceView.swift */; };
 		B0DD824CCD79C51EF5049CB7 /* HandCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90E2B0706DE03BDF875EA06 /* HandCardView.swift */; };
 		B81A94EEEAF4ED0631EAB741 /* BetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3079EF1B1B88D10C6AE1E8F4 /* BetPicker.swift */; };
@@ -52,6 +58,7 @@
 		0EBC90FEACAE955D4CAAFEEB /* VerticalPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalPager.swift; sourceTree = "<group>"; };
 		130CBF49B62F73BA09B65350 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2760F91A510D046D56D2A552 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3079EF1B1B88D10C6AE1E8F4 /* BetPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetPicker.swift; sourceTree = "<group>"; };
 		3E149EB3993CB35C8249C18E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		4066109115009055A3F656F6 /* ProbabilityEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProbabilityEngine.swift; sourceTree = "<group>"; };
@@ -68,6 +75,11 @@
 		95C94C5A8305C2A9F75FE78A /* StatsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsStore.swift; sourceTree = "<group>"; };
 		A1136E5C7AF958641AE92479 /* BuyInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInButton.swift; sourceTree = "<group>"; };
 		A62482A310A0A5B1DC8B9148 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
+		AA000001AA000001AA000001 /* DailyBonusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusStore.swift; sourceTree = "<group>"; };
+		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
+		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
+		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
+		AA000009AA000009AA000009 /* DailyBonusSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusSheet.swift; sourceTree = "<group>"; };
 		AD54EE5B88722F32001C0AD7 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		C8365136D86FCF3BAF00FAAF /* CasinoTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasinoTheme.swift; sourceTree = "<group>"; };
@@ -77,6 +89,7 @@
 		E406BEB07E5C5A3EE8213EC0 /* WalletStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletStore.swift; sourceTree = "<group>"; };
 		E61C02E141C81F868C57F147 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
 		F397315D238B2C223E145569 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		F48A9C6A2FAE584E00B6E7CC /* BlakJak.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = BlakJak.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -88,12 +101,22 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		047B6FBA84E8AA4835FCFAA1 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		165452F01B21200C0D5DED01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				E65BDE3F2ADA77F6EEA010AB /* Components */,
 				3D3DE18D5EDE1574A7E85814 /* Feed */,
 				5956591D766DD8DADBA26E98 /* Game */,
+				AA00000CAA00000CAA00000C /* Monetization */,
+				047B6FBA84E8AA4835FCFAA1 /* Onboarding */,
 				026945B5743A8F0A6606BE8F /* Profile */,
 			);
 			path = Views;
@@ -121,6 +144,7 @@
 		736D32D0D690CD82C87CD3FD /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				AA000001AA000001AA000001 /* DailyBonusStore.swift */,
 				8EE4D57FAC85C279358B7753 /* SettingsStore.swift */,
 				95C94C5A8305C2A9F75FE78A /* StatsStore.swift */,
 				00174270811CD59BAEC2E461 /* StreakStore.swift */,
@@ -161,6 +185,7 @@
 				CE691C9C040790904981C666 /* Engine */,
 				7C09DE8FE064A54084D0F945 /* Models */,
 				736D32D0D690CD82C87CD3FD /* Persistence */,
+				AA00000BAA00000BAA00000B /* Store */,
 				C74D92E0FABC918E3BB95CA4 /* Theme */,
 				9D7912CE61AEF55577EAC997 /* Util */,
 				8E234252D3C55078FD4A31E2 /* ViewModels */,
@@ -175,6 +200,24 @@
 				3E149EB3993CB35C8249C18E /* Haptics.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		AA00000BAA00000BAA00000B /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				AA000003AA000003AA000003 /* ChipStore.swift */,
+				AA000005AA000005AA000005 /* RewardedAdManager.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		AA00000CAA00000CAA00000C /* Monetization */ = {
+			isa = PBXGroup;
+			children = (
+				AA000007AA000007AA000007 /* BrokeSheet.swift */,
+				AA000009AA000009AA000009 /* DailyBonusSheet.swift */,
+			);
+			path = Monetization;
 			sourceTree = "<group>";
 		};
 		AAD53B67B01D71F9F277CC3F /* Products */ = {
@@ -219,6 +262,7 @@
 		F9DF23B21F323A9F957C6AE3 = {
 			isa = PBXGroup;
 			children = (
+				F48A9C6A2FAE584E00B6E7CC /* BlakJak.storekit */,
 				98274D7A128BF46577BF63D3 /* BlakJak */,
 				AAD53B67B01D71F9F277CC3F /* Products */,
 			);
@@ -309,6 +353,7 @@
 				88013254DACF040CDD7E034B /* Haptics.swift in Sources */,
 				234C1111DA70E51A1C8CBB68 /* InlineGameView.swift in Sources */,
 				1CB89A0B5194C6B6822675DE /* MultiplierBadge.swift in Sources */,
+				A24F7DEDFA944CCA3BFFFF59 /* OnboardingView.swift in Sources */,
 				6D2CE93F5115AE3E207B5D18 /* PlayingCardView.swift in Sources */,
 				8D1A448C9B53BA8CC71FCF2F /* ProbabilityEngine.swift in Sources */,
 				BA08B62C321E31715F77F7AB /* ProfileView.swift in Sources */,
@@ -321,6 +366,11 @@
 				3A5313B69ED4A16FF9BD2CED /* VerticalPager.swift in Sources */,
 				393741F40A3503A2D460ECB9 /* WalletStore.swift in Sources */,
 				DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */,
+				AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */,
+				AA000004AA000004AA000004 /* ChipStore.swift in Sources */,
+				AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */,
+				AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */,
+				AA00000AAA00000AAA00000A /* DailyBonusSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

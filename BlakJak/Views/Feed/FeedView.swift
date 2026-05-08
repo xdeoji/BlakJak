@@ -4,7 +4,11 @@ struct FeedView: View {
     @StateObject private var feedVM = FeedViewModel()
     @StateObject private var walletVM = WalletViewModel()
     @StateObject private var streakVM = StreakViewModel()
+    @StateObject private var chipStore = ChipStore.shared
+    @StateObject private var adManager = RewardedAdManager.shared
     @State private var showProfile = false
+    @State private var showBrokeSheet = false
+    @State private var showDailyBonus = false
     @State private var activeGame: ActiveGame?
     @State private var currentPage = 0
 
@@ -84,7 +88,10 @@ struct FeedView: View {
 
                     Spacer()
 
-                    BalanceView(balance: walletVM.balance)
+                    Button { showBrokeSheet = true } label: {
+                        BalanceView(balance: walletVM.balance)
+                    }
+                    .buttonStyle(.plain)
                 }
 
                 if streakVM.winStreak >= 3 || streakVM.lossStreak >= 3 {
@@ -116,8 +123,41 @@ struct FeedView: View {
             }
         }
         .preferredColorScheme(.dark)
+        .onAppear {
+            // Show daily bonus sheet once per session if available and not broke
+            if DailyBonusStore.isAvailable && !walletVM.isBroke {
+                showDailyBonus = true
+            }
+        }
+        .onChange(of: walletVM.balance) { _, newBalance in
+            // Only trigger if not mid-hand — player may win and recover
+            if newBalance < 10 && !showBrokeSheet && activeGame == nil {
+                showBrokeSheet = true
+            }
+        }
+        .onChange(of: walletVM.isInGame) { _, inGame in
+            // Check after hand resolves in case balance is still too low to play
+            if !inGame && walletVM.isBroke && !showBrokeSheet {
+                showBrokeSheet = true
+            }
+        }
         .sheet(isPresented: $showProfile) {
             ProfileView(walletVM: walletVM, streakVM: streakVM)
+        }
+        .sheet(isPresented: $showBrokeSheet) {
+            BrokeSheet(
+                walletVM: walletVM,
+                chipStore: chipStore,
+                adManager: adManager,
+                onDismiss: { showBrokeSheet = false }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.hidden)
+        }
+        .sheet(isPresented: $showDailyBonus) {
+            DailyBonusSheet(walletVM: walletVM, onDismiss: { showDailyBonus = false })
+                .presentationDetents([.height(280)])
+                .presentationDragIndicator(.hidden)
         }
     }
 }

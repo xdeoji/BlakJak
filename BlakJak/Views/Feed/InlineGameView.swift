@@ -221,17 +221,29 @@ struct InlineGameView: View {
                 statBlock(label: "TO WIN", value: "\(potentialPayout)")
             }
 
-            // Streak bonus line
-            if streakVM.totalBonusMultiplier > 1.0 {
-                HStack(spacing: 4) {
-                    Image(systemName: "flame.fill")
-                        .font(.system(size: 9))
-                    Text("incl. \(String(format: "%.1fx", streakVM.totalBonusMultiplier)) streak bonus")
-                        .font(.system(size: 10, weight: .medium, design: .monospaced))
+            // Streak info line
+            HStack(spacing: 8) {
+                if hand.winProbability < 0.60 {
+                    HStack(spacing: 3) {
+                        Image(systemName: "flame.fill")
+                            .font(.system(size: 9))
+                        Text("streak eligible")
+                            .font(.system(size: 10, weight: .medium, design: .monospaced))
+                    }
+                    .foregroundColor(CasinoTheme.success.opacity(0.7))
                 }
-                .foregroundColor(CasinoTheme.success.opacity(0.7))
-                .padding(.top, 8)
+
+                if streakVM.totalBonusMultiplier > 1.0 {
+                    HStack(spacing: 3) {
+                        Text("·")
+                            .foregroundColor(CasinoTheme.textTertiary)
+                        Text("\(String(format: "%.1fx", streakVM.totalBonusMultiplier)) bonus")
+                            .font(.system(size: 10, weight: .medium, design: .monospaced))
+                            .foregroundColor(CasinoTheme.success.opacity(0.7))
+                    }
+                }
             }
+            .padding(.top, 6)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 14)

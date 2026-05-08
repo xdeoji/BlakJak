@@ -281,7 +281,7 @@ class GameViewModel: ObservableObject {
                 dealerValue: dealerHand.value,
                 playerBusted: hand.isBusted,
                 dealerBusted: dealerHand.isBusted,
-                playerBlackjack: hand.isBlackjack,
+                playerBlackjack: !isSplit && hand.isBlackjack,
                 dealerBlackjack: dealerHand.isBlackjack
             )
             handOutcomes[i] = outcome

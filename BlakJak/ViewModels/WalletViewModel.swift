@@ -10,29 +10,19 @@ class WalletViewModel: ObservableObject {
         self.balance = WalletStore.balance
     }
 
-    private let topUpThreshold = 10
-    private let topUpAmount = 1000
+    var isBroke: Bool { balance < 10 }
 
     func deduct(_ amount: Int) {
         balance -= amount
         WalletStore.balance = balance
-        checkTopUp()
     }
 
     func credit(_ amount: Int) {
         balance += amount
         WalletStore.balance = balance
-        checkTopUp()
     }
 
     func canAfford(_ amount: Int) -> Bool {
         balance >= amount
-    }
-
-    private func checkTopUp() {
-        if balance < topUpThreshold {
-            balance = topUpAmount
-            WalletStore.balance = balance
-        }
     }
 }
