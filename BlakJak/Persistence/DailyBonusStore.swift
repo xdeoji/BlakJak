@@ -14,6 +14,11 @@ struct DailyBonusStore {
         return Date().timeIntervalSince(last) >= 3600
     }
 
+    static var timeUntilAvailable: TimeInterval {
+        guard let last = lastClaimed else { return 0 }
+        return max(0, 3600 - Date().timeIntervalSince(last))
+    }
+
     static func claim() {
         lastClaimed = Date()
     }

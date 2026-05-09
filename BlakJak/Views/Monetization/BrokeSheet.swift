@@ -12,6 +12,7 @@ struct BrokeSheet: View {
     @State private var bankBalance = BankStore.balance
     @State private var showWithdrawInput = false
     @State private var withdrawText = ""
+    @State private var bonusTimeRemaining: TimeInterval = DailyBonusStore.timeUntilAvailable
 
     var body: some View {
         ZStack {
@@ -62,6 +63,8 @@ struct BrokeSheet: View {
                                     Haptics.heavy()
                                     onDismiss()
                                 }
+                            } else if DailyBonusStore.lastClaimed != nil {
+                                bonusCountdownRow
                             }
 
                             if adManager.isAdAvailable {
@@ -127,7 +130,55 @@ struct BrokeSheet: View {
         .onAppear {
             dailyAvailable = DailyBonusStore.isAvailable
             bankBalance = BankStore.balance
+            bonusTimeRemaining = DailyBonusStore.timeUntilAvailable
         }
+        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
+            guard !dailyAvailable else { return }
+            bonusTimeRemaining = DailyBonusStore.timeUntilAvailable
+            if bonusTimeRemaining <= 0 {
+                dailyAvailable = true
+            }
+        }
+    }
+
+    // MARK: - Bonus countdown row
+
+    private var bonusCountdownRow: some View {
+        HStack(spacing: 14) {
+            Image(systemName: "clock.fill")
+                .font(.system(size: 20))
+                .foregroundColor(CasinoTheme.textTertiary)
+                .frame(width: 40)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Hourly Bonus")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(CasinoTheme.textSecondary)
+                Text("Next bonus in")
+                    .font(.system(size: 12, weight: .regular))
+                    .foregroundColor(CasinoTheme.textTertiary)
+            }
+
+            Spacer()
+
+            Text(countdownText)
+                .font(.system(size: 15, weight: .bold, design: .monospaced))
+                .foregroundColor(CasinoTheme.textTertiary)
+                .contentTransition(.numericText())
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(CasinoTheme.bgCard)
+                .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(CasinoTheme.border, lineWidth: 1))
+        )
+    }
+
+    private var countdownText: String {
+        let t = Int(bonusTimeRemaining)
+        let m = t / 60
+        let s = t % 60
+        return String(format: "%d:%02d", m, s)
     }
 
     // MARK: - Bank row
