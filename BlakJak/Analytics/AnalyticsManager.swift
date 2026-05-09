@@ -1,9 +1,13 @@
 import Foundation
+import CryptoKit
 
 /// Lightweight analytics manager.
 ///
-/// Events are written to a local JSONL queue at Documents/blakjak_events.jsonl.
+/// Events are written to a local JSONL queue at Library/Application Support/blakjak_events.jsonl.
 /// Each line is a self-contained JSON object — safe to tail, grep, or bulk-upload.
+///
+/// Each event includes a `seq` counter and a `prev_hash` (SHA256 of the previous line's raw JSON).
+/// Editing, deleting, or reordering any event breaks the chain, detectable on upload.
 ///
 /// PostHog integration: add the PostHog iOS SDK via Xcode → File → Add Package Dependencies.
 /// Then search for each `// POSTHOG:` comment and uncomment the relevant line.
@@ -22,13 +26,19 @@ final class AnalyticsManager {
     private var sessionStartBalance: Int = 0
     private var sessionHandsPlayed: Int = 0
     private var sessionHandsSkipped: Int = 0
-    private var sessionNetChips: Int = 0   // running PnL
+    private var sessionNetChips: Int = 0
+
+    // MARK: - Chain state
+
+    private var seq: Int = 0
+    private var prevHash: String = ""   // SHA256 of the previous event's raw JSON line
 
     // MARK: - Local queue
 
     private lazy var queueURL: URL = {
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return docs.appendingPathComponent("blakjak_events.jsonl")
+        let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        try? FileManager.default.createDirectory(at: support, withIntermediateDirectories: true)
+        return support.appendingPathComponent("blakjak_events.jsonl")
     }()
 
     private init() {}
@@ -42,6 +52,8 @@ final class AnalyticsManager {
         sessionHandsPlayed = 0
         sessionHandsSkipped = 0
         sessionNetChips = 0
+        seq = 0
+        prevHash = sessionID   // chain is seeded with the session ID
 
         // POSTHOG: PostHogSDK.shared.setup(PostHogConfig(apiKey: "YOUR_KEY", host: "https://app.posthog.com"))
     }
@@ -74,7 +86,7 @@ final class AnalyticsManager {
             "player_total": hand.playerTotal,
             "player_is_soft": hand.playerIsSoft,
             "dealer_upcard": hand.dealerUpcard.rank.rawValue,
-            "win_probability": round(hand.winProbability * 1000) / 10,  // e.g. 62.3
+            "win_probability": round(hand.winProbability * 1000) / 10,
             "multiplier": hand.multiplier
         ])
     }
@@ -122,12 +134,20 @@ final class AnalyticsManager {
     // MARK: - Queue
 
     private func enqueue(_ name: String, props: [String: Any]) {
+        seq += 1
         var payload = props
         payload["event"] = name
         payload["ts"] = ISO8601DateFormatter().string(from: Date())
+        payload["seq"] = seq
+        payload["prev_hash"] = prevHash
 
-        guard let data = try? JSONSerialization.data(withJSONObject: payload),
+        // Stable sort keys so the serialized string is deterministic
+        guard let data = try? JSONSerialization.data(withJSONObject: payload,
+                                                     options: .sortedKeys),
               let line = String(data: data, encoding: .utf8) else { return }
+
+        // Hash this event's JSON — becomes prev_hash for the next event
+        prevHash = sha256(line)
 
         let entry = line + "\n"
 
@@ -142,5 +162,10 @@ final class AnalyticsManager {
         }
 
         // POSTHOG: PostHogSDK.shared.capture(name, properties: props.mapValues { AnyCodable($0) })
+    }
+
+    private func sha256(_ string: String) -> String {
+        let digest = SHA256.hash(data: Data(string.utf8))
+        return digest.map { String(format: "%02x", $0) }.joined()
     }
 }
