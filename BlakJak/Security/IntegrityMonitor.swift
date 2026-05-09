@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 import CryptoKit
 
 struct IntegrityMonitor {
@@ -86,10 +85,19 @@ struct IntegrityMonitor {
     // MARK: - Balance checksum
 
     private static let salt = "blakjak_v1_wallet"
+    private static let deviceKeyKeychainKey = "blakjak_stable_device_key"
+
+    /// A stable device identifier stored in the Keychain.
+    /// Unlike identifierForVendor, this survives reinstalls and never returns nil.
+    static var stableDeviceKey: String {
+        if let existing = KeychainHelper.read(deviceKeyKeychainKey) { return existing }
+        let new = UUID().uuidString
+        KeychainHelper.write(new, for: deviceKeyKeychainKey)
+        return new
+    }
 
     static func checksum(for balance: Int) -> String {
-        let deviceID = UIDevice.current.identifierForVendor?.uuidString ?? "anon"
-        let raw = "\(balance):\(deviceID):\(salt)"
+        let raw = "\(balance):\(stableDeviceKey):\(salt)"
         let digest = SHA256.hash(data: Data(raw.utf8))
         return digest.map { String(format: "%02x", $0) }.joined()
     }

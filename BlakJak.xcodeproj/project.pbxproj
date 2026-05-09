@@ -34,6 +34,7 @@
 		CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000000CC000000CC000000 /* AnalyticsManager.swift */; };
 		DD000001DD000001DD000001 /* ObfuscatedInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000DD000000DD000000 /* ObfuscatedInt.swift */; };
 		DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002DD000002DD000002 /* IntegrityMonitor.swift */; };
+		DD000005DD000005DD000005 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000006DD000006DD000006 /* KeychainHelper.swift */; };
 		AA000004AA000004AA000004 /* ChipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AA000003AA000003 /* ChipStore.swift */; };
 		AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000005AA000005AA000005 /* RewardedAdManager.swift */; };
 		AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000007AA000007AA000007 /* BrokeSheet.swift */; };
@@ -83,6 +84,7 @@
 		CC000000CC000000CC000000 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		DD000000DD000000DD000000 /* ObfuscatedInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedInt.swift; sourceTree = "<group>"; };
 		DD000002DD000002DD000002 /* IntegrityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrityMonitor.swift; sourceTree = "<group>"; };
+		DD000006DD000006DD000006 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
 		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
 		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			children = (
 				DD000000DD000000DD000000 /* ObfuscatedInt.swift */,
 				DD000002DD000002DD000002 /* IntegrityMonitor.swift */,
+				DD000006DD000006DD000006 /* KeychainHelper.swift */,
 			);
 			path = Security;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */,
 				DD000001DD000001DD000001 /* ObfuscatedInt.swift in Sources */,
 				DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */,
+				DD000005DD000005DD000005 /* KeychainHelper.swift in Sources */,
 				BB000002BB000002BB000002 /* BankStore.swift in Sources */,
 				AA000004AA000004AA000004 /* ChipStore.swift in Sources */,
 				AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */,
