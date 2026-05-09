@@ -189,7 +189,7 @@ struct FeedView: View {
                 adManager: adManager,
                 onDismiss: { showBrokeSheet = false }
             )
-            .presentationDetents(UIDevice.current.userInterfaceIdiom == .pad ? [.large] : [.medium, .large])
+            .presentationDetents([.large])
             .presentationDragIndicator(.hidden)
         }
         .sheet(isPresented: $showDailyBonus) {
