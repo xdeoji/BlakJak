@@ -34,8 +34,25 @@ class WalletViewModel: ObservableObject {
 
     var isBroke: Bool { balance < 10 }
 
+    /// Refreshes balance from iCloud before allowing a bet.
+    /// This catches the case where another device spent chips while this device was idle.
+    func canPlaceBet(_ amount: Int) -> Bool {
+        // Always pull latest from iCloud before checking affordability
+        NSUbiquitousKeyValueStore.default.synchronize()
+        let cloudBalance = WalletStore.balance
+        if cloudBalance < secureBalance.value {
+            // Another device spent chips — correct local state
+            secureBalance = ObfuscatedInt(cloudBalance)
+            balance = cloudBalance
+        }
+        return secureBalance.value >= amount
+    }
+
     func deduct(_ amount: Int) {
         validateIntegrity()
+        // Stamp the deduction time so other devices can detect concurrent bets
+        NSUbiquitousKeyValueStore.default.set(Date().timeIntervalSince1970, forKey: "blakjak_last_deduct_ts")
+        NSUbiquitousKeyValueStore.default.synchronize()
         let newVal = secureBalance.value - amount
         secureBalance = ObfuscatedInt(newVal)
         balance = newVal

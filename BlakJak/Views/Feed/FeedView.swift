@@ -93,8 +93,10 @@ struct FeedView: View {
                 HStack {
                     Button { showProfile = true } label: {
                         Image(systemName: "person.crop.circle")
-                            .font(.system(size: 20, weight: .medium))
+                            .font(.system(size: 28, weight: .medium))
                             .foregroundColor(CasinoTheme.textSecondary)
+                            .frame(width: 48, height: 48)
+                            .contentShape(Rectangle())
                     }
 
                     Spacer()
@@ -128,7 +130,7 @@ struct FeedView: View {
                     } else {
                         BetPicker(amount: $walletVM.betAmount, balance: walletVM.balance) {
                             guard let hand = currentHand,
-                                  walletVM.betAmount <= walletVM.balance else { return }
+                                  walletVM.canPlaceBet(walletVM.betAmount) else { return }
                             Haptics.heavy()
                             SoundManager.shared.buyIn()
                             let bet = walletVM.betAmount
