@@ -128,8 +128,6 @@ struct ProfileView: View {
         ], spacing: 12) {
             statCell(label: "Total Wagered", value: statsVM.totalWagered.chipFormatted)
             statCell(label: "Total Returned", value: statsVM.totalReturned.chipFormatted)
-            statCell(label: "Avg Bet", value: statsVM.avgBet.chipFormatted)
-            statCell(label: "Avg Multiplier", value: String(format: "%.1fx", statsVM.avgMultiplier))
             statCell(label: "Biggest Win", value: "+\(statsVM.biggestWin.chipFormatted)")
             statCell(label: "Biggest Loss", value: statsVM.biggestLoss.chipFormatted)
         }
