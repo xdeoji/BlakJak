@@ -20,3 +20,12 @@ Pods/
 # Swift Package Manager
 .build/
 Package.resolved
+
+# Built app bundles (should never be committed)
+*.app/
+
+# Credentials & provisioning
+*.p8
+*.p12
+*.mobileprovision
+AuthKey_*.p8
