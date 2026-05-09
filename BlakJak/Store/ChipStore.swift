@@ -56,7 +56,10 @@ class ChipStore: ObservableObject {
             case .success(let verification):
                 let transaction = try checkVerified(verification)
                 let chips = ChipProductID(rawValue: product.id)?.chips ?? 0
-                if chips > 0 { walletVM.credit(chips) }
+                if chips > 0 {
+                    walletVM.credit(chips)
+                    Haptics.success()
+                }
                 await transaction.finish()
             case .userCancelled:
                 break
