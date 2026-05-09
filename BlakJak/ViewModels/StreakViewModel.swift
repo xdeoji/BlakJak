@@ -45,6 +45,17 @@ class StreakViewModel: ObservableObject {
         }
     }
 
+    /// Analytics label: describes the active streak bonus, or nil if none.
+    var activeStreakLabel: String? {
+        guard enabled else { return nil }
+        switch (activeWinBonus, activeLossBonus) {
+        case (let w?, let l?): return "\(w.label) + \(l.label)"
+        case (let w?, nil):    return w.label
+        case (nil, let l?):    return l.label
+        case (nil, nil):       return nil
+        }
+    }
+
     /// Combined bonus multiplier to apply to a win payout
     var totalBonusMultiplier: Double {
         guard enabled else { return 1.0 }

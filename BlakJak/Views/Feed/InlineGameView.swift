@@ -445,7 +445,10 @@ struct InlineGameView: View {
                 betAmount: gameVM.totalBet,
                 netChips: netChips,
                 outcome: outcomeString,
-                actions: gameVM.actionLog
+                actions: gameVM.actionLog,
+                winStreak: streakVM.winStreak,
+                lossStreak: streakVM.lossStreak,
+                activeStreakBonus: streakVM.activeStreakLabel
             )
         }
     }

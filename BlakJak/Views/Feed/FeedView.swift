@@ -142,7 +142,10 @@ struct FeedView: View {
                                 betAmount: bet,
                                 balance: balanceBefore,
                                 consecutiveSkipsBefore: skipsBefore,
-                                returnedToSkipped: wasSkipped
+                                returnedToSkipped: wasSkipped,
+                                winStreak: streakVM.winStreak,
+                                lossStreak: streakVM.lossStreak,
+                                activeStreakBonus: streakVM.activeStreakLabel
                             )
                             withAnimation(.easeOut(duration: 0.2)) {
                                 activeGame = ActiveGame(hand: hand, betAmount: bet)

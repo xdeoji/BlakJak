@@ -109,7 +109,8 @@ final class AnalyticsManager {
     }
 
     func trackHandStarted(hand: BlackjackHand, betAmount: Int, balance: Int,
-                          consecutiveSkipsBefore: Int, returnedToSkipped: Bool) {
+                          consecutiveSkipsBefore: Int, returnedToSkipped: Bool,
+                          winStreak: Int, lossStreak: Int, activeStreakBonus: String?) {
         enqueue("hand_started", props: [
             "session_id": sessionID,
             "hand_feed_index": hand.feedIndex,
@@ -122,12 +123,16 @@ final class AnalyticsManager {
             "player_is_soft": hand.playerIsSoft,
             "dealer_upcard": hand.dealerUpcard.rank.rawValue,
             "win_probability": round(hand.winProbability * 1000) / 10,
-            "multiplier": hand.multiplier
+            "multiplier": hand.multiplier,
+            "win_streak": winStreak,
+            "loss_streak": lossStreak,
+            "active_streak_bonus": activeStreakBonus ?? "none"
         ])
     }
 
     func trackHandCompleted(hand: BlackjackHand, betAmount: Int, netChips: Int,
-                            outcome: String, actions: [String]) {
+                            outcome: String, actions: [String],
+                            winStreak: Int, lossStreak: Int, activeStreakBonus: String?) {
         sessionHandsPlayed += 1
         sessionNetChips += netChips
 
@@ -144,7 +149,10 @@ final class AnalyticsManager {
             "player_is_soft": hand.playerIsSoft,
             "dealer_upcard": hand.dealerUpcard.rank.rawValue,
             "win_probability": round(hand.winProbability * 1000) / 10,
-            "multiplier": hand.multiplier
+            "multiplier": hand.multiplier,
+            "win_streak": winStreak,
+            "loss_streak": lossStreak,
+            "active_streak_bonus": activeStreakBonus ?? "none"
         ])
     }
 
