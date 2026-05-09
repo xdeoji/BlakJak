@@ -129,12 +129,12 @@ struct ProfileView: View {
             GridItem(.flexible(), spacing: 12),
             GridItem(.flexible(), spacing: 12)
         ], spacing: 12) {
-            statCell(label: "Total Wagered", value: "\(statsVM.totalWagered)")
-            statCell(label: "Total Returned", value: "\(statsVM.totalReturned)")
-            statCell(label: "Avg Bet", value: "\(statsVM.avgBet)")
+            statCell(label: "Total Wagered", value: statsVM.totalWagered.chipFormatted)
+            statCell(label: "Total Returned", value: statsVM.totalReturned.chipFormatted)
+            statCell(label: "Avg Bet", value: statsVM.avgBet.chipFormatted)
             statCell(label: "Avg Multiplier", value: String(format: "%.1fx", statsVM.avgMultiplier))
-            statCell(label: "Biggest Win", value: "+\(statsVM.biggestWin)")
-            statCell(label: "Biggest Loss", value: "\(statsVM.biggestLoss)")
+            statCell(label: "Biggest Win", value: "+\(statsVM.biggestWin.chipFormatted)")
+            statCell(label: "Biggest Loss", value: statsVM.biggestLoss.chipFormatted)
         }
     }
 
@@ -231,8 +231,8 @@ struct ProfileView: View {
 
     private var pnlText: String {
         let pnl = statsVM.pnl
-        if pnl >= 0 { return "+\(pnl)" }
-        return "\(pnl)"
+        if pnl >= 0 { return "+\(pnl.chipFormatted)" }
+        return pnl.chipFormatted
     }
 
     private var pnlColor: Color {
@@ -358,7 +358,10 @@ struct ProfileView: View {
 
     // MARK: - Bank
 
-    @State private var showWithdrawConfirm = false
+    @State private var showDepositInput = false
+    @State private var depositText = ""
+    @State private var showWithdrawInput = false
+    @State private var withdrawText = ""
 
     private var bankCard: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -367,72 +370,76 @@ struct ProfileView: View {
                 .foregroundColor(CasinoTheme.textTertiary)
                 .tracking(1.5)
 
+            // Balances row
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(bankBalance.formatted()) pts")
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(bankBalance.formatted())")
                         .font(.system(size: 24, weight: .bold, design: .monospaced))
                         .foregroundColor(.white)
-                    Text("Saved chips — not lost on reset")
-                        .font(.system(size: 12, weight: .regular))
+                    Text("banked")
+                        .font(.system(size: 11, weight: .regular))
                         .foregroundColor(CasinoTheme.textTertiary)
                 }
                 Spacer()
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("\(walletVM.balance.formatted())")
+                        .font(.system(size: 18, weight: .semibold, design: .monospaced))
+                        .foregroundColor(CasinoTheme.textSecondary)
+                    Text("in wallet")
+                        .font(.system(size: 11, weight: .regular))
+                        .foregroundColor(CasinoTheme.textTertiary)
+                }
             }
 
-            HStack(spacing: 10) {
-                // Deposit
-                Button {
-                    guard walletVM.balance > 0 else { return }
-                    let amount = walletVM.balance
-                    BankStore.balance += amount
-                    bankBalance = BankStore.balance
-                    walletVM.credit(-amount)
-                    Haptics.medium()
-                } label: {
-                    Label("Deposit All", systemImage: "arrow.down.circle")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(CasinoTheme.success)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(CasinoTheme.success.opacity(0.1))
-                                .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(CasinoTheme.success.opacity(0.25), lineWidth: 1))
-                        )
-                }
-                .buttonStyle(.plain)
-                .disabled(walletVM.balance <= 0)
-                .opacity(walletVM.balance <= 0 ? 0.4 : 1)
-
-                // Withdraw
-                Button {
-                    showWithdrawConfirm = true
-                } label: {
-                    Label("Withdraw", systemImage: "arrow.up.circle")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(CasinoTheme.warning)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(CasinoTheme.warning.opacity(0.1))
-                                .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(CasinoTheme.warning.opacity(0.25), lineWidth: 1))
-                        )
-                }
-                .buttonStyle(.plain)
-                .disabled(bankBalance <= 0)
-                .opacity(bankBalance <= 0 ? 0.4 : 1)
-                .confirmationDialog("Withdraw \(bankBalance.formatted()) chips?", isPresented: $showWithdrawConfirm, titleVisibility: .visible) {
-                    Button("Withdraw All") {
-                        let amount = BankStore.balance
-                        BankStore.balance = 0
-                        bankBalance = 0
-                        walletVM.credit(amount)
-                        Haptics.medium()
+            if showDepositInput {
+                depositInputView
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            } else if showWithdrawInput {
+                withdrawInputView
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            } else {
+                HStack(spacing: 10) {
+                    // Deposit
+                    Button {
+                        depositText = ""
+                        withAnimation(.easeOut(duration: 0.2)) { showDepositInput = true }
+                    } label: {
+                        Label("Deposit", systemImage: "arrow.down.circle")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(CasinoTheme.success)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(CasinoTheme.success.opacity(0.1))
+                                    .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(CasinoTheme.success.opacity(0.25), lineWidth: 1))
+                            )
                     }
-                } message: {
-                    Text("This will move all banked chips back to your wallet.")
+                    .buttonStyle(.plain)
+                    .disabled(walletVM.balance <= 0)
+                    .opacity(walletVM.balance <= 0 ? 0.4 : 1)
+
+                    // Withdraw
+                    Button {
+                        withdrawText = ""
+                        withAnimation(.easeOut(duration: 0.2)) { showWithdrawInput = true }
+                    } label: {
+                        Label("Withdraw", systemImage: "arrow.up.circle")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(CasinoTheme.warning)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(CasinoTheme.warning.opacity(0.1))
+                                    .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(CasinoTheme.warning.opacity(0.25), lineWidth: 1))
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(bankBalance <= 0)
+                    .opacity(bankBalance <= 0 ? 0.4 : 1)
                 }
+                .transition(.opacity)
             }
         }
         .padding(20)
@@ -441,6 +448,211 @@ struct ProfileView: View {
                 .fill(CasinoTheme.bgCard)
                 .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CasinoTheme.border, lineWidth: 1))
         )
+        .animation(.easeOut(duration: 0.2), value: showDepositInput)
+        .animation(.easeOut(duration: 0.2), value: showWithdrawInput)
+    }
+
+    private var depositInputView: some View {
+        VStack(spacing: 10) {
+            // Amount display + Max button
+            HStack {
+                Button {
+                    withAnimation(.easeOut(duration: 0.2)) { showDepositInput = false }
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(CasinoTheme.textTertiary)
+                        .frame(width: 36, height: 36)
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+
+                Text(depositText.isEmpty ? "0" : depositText)
+                    .font(.system(size: 28, weight: .bold, design: .monospaced))
+                    .foregroundColor(.white)
+                    .contentTransition(.numericText())
+
+                Spacer()
+
+                Button {
+                    depositText = "\(walletVM.balance)"
+                    Haptics.tick()
+                } label: {
+                    Text("MAX")
+                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .foregroundColor(CasinoTheme.success)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule()
+                                .fill(CasinoTheme.success.opacity(0.12))
+                                .overlay(Capsule().strokeBorder(CasinoTheme.success.opacity(0.3), lineWidth: 1))
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+
+            Text("available: \(walletVM.balance.formatted())")
+                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                .foregroundColor(CasinoTheme.textTertiary)
+
+            // Numpad
+            let keys: [[String]] = [["1","2","3"],["4","5","6"],["7","8","9"],["C","0","⌫"]]
+            VStack(spacing: 6) {
+                ForEach(keys, id: \.self) { row in
+                    HStack(spacing: 6) {
+                        ForEach(row, id: \.self) { key in
+                            Button {
+                                handleDepositKey(key)
+                            } label: {
+                                Text(key)
+                                    .font(.system(size: 18, weight: .medium, design: .monospaced))
+                                    .foregroundColor(key == "C" ? CasinoTheme.danger : .white)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 40)
+                                    .background(RoundedRectangle(cornerRadius: 8).fill(CasinoTheme.bgElevated))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+
+            // Confirm deposit
+            let depositAmount = Int(depositText) ?? 0
+            Button {
+                guard depositAmount > 0, depositAmount <= walletVM.balance else { return }
+                BankStore.balance += depositAmount
+                bankBalance = BankStore.balance
+                walletVM.credit(-depositAmount)
+                Haptics.heavy()
+                withAnimation(.easeOut(duration: 0.2)) { showDepositInput = false }
+            } label: {
+                Text(depositAmount > 0 ? "Deposit \(depositAmount.formatted())" : "Enter Amount")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(depositAmount > 0 && depositAmount <= walletVM.balance ? .black : CasinoTheme.textTertiary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 13)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(depositAmount > 0 && depositAmount <= walletVM.balance ? Color.white : CasinoTheme.bgElevated)
+                    )
+            }
+            .buttonStyle(.plain)
+            .disabled(depositAmount <= 0 || depositAmount > walletVM.balance)
+        }
+    }
+
+    private func handleDepositKey(_ key: String) {
+        Haptics.tick()
+        switch key {
+        case "C": depositText = ""
+        case "⌫":
+            if !depositText.isEmpty { depositText.removeLast() }
+        default:
+            if depositText == "0" { depositText = key }
+            else if depositText.count < 9 { depositText += key }
+        }
+    }
+
+    private var withdrawInputView: some View {
+        VStack(spacing: 10) {
+            HStack {
+                Button {
+                    withAnimation(.easeOut(duration: 0.2)) { showWithdrawInput = false }
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(CasinoTheme.textTertiary)
+                        .frame(width: 36, height: 36)
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+
+                Text(withdrawText.isEmpty ? "0" : withdrawText)
+                    .font(.system(size: 28, weight: .bold, design: .monospaced))
+                    .foregroundColor(.white)
+                    .contentTransition(.numericText())
+
+                Spacer()
+
+                Button {
+                    withdrawText = "\(bankBalance)"
+                    Haptics.tick()
+                } label: {
+                    Text("MAX")
+                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .foregroundColor(CasinoTheme.warning)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule()
+                                .fill(CasinoTheme.warning.opacity(0.12))
+                                .overlay(Capsule().strokeBorder(CasinoTheme.warning.opacity(0.3), lineWidth: 1))
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+
+            Text("available: \(bankBalance.formatted())")
+                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                .foregroundColor(CasinoTheme.textTertiary)
+
+            let keys: [[String]] = [["1","2","3"],["4","5","6"],["7","8","9"],["C","0","⌫"]]
+            VStack(spacing: 6) {
+                ForEach(keys, id: \.self) { row in
+                    HStack(spacing: 6) {
+                        ForEach(row, id: \.self) { key in
+                            Button { handleWithdrawKey(key) } label: {
+                                Text(key)
+                                    .font(.system(size: 18, weight: .medium, design: .monospaced))
+                                    .foregroundColor(key == "C" ? CasinoTheme.danger : .white)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 40)
+                                    .background(RoundedRectangle(cornerRadius: 8).fill(CasinoTheme.bgElevated))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+
+            let withdrawAmount = Int(withdrawText) ?? 0
+            Button {
+                guard withdrawAmount > 0, withdrawAmount <= bankBalance else { return }
+                BankStore.balance -= withdrawAmount
+                bankBalance = BankStore.balance
+                walletVM.credit(withdrawAmount)
+                Haptics.heavy()
+                withAnimation(.easeOut(duration: 0.2)) { showWithdrawInput = false }
+            } label: {
+                Text(withdrawAmount > 0 ? "Withdraw \(withdrawAmount.formatted())" : "Enter Amount")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(withdrawAmount > 0 && withdrawAmount <= bankBalance ? .black : CasinoTheme.textTertiary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 13)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(withdrawAmount > 0 && withdrawAmount <= bankBalance ? Color.white : CasinoTheme.bgElevated)
+                    )
+            }
+            .buttonStyle(.plain)
+            .disabled(withdrawAmount <= 0 || withdrawAmount > bankBalance)
+        }
+    }
+
+    private func handleWithdrawKey(_ key: String) {
+        Haptics.tick()
+        switch key {
+        case "C": withdrawText = ""
+        case "⌫":
+            if !withdrawText.isEmpty { withdrawText.removeLast() }
+        default:
+            if withdrawText == "0" { withdrawText = key }
+            else if withdrawText.count < 9 { withdrawText += key }
+        }
     }
 
     // MARK: - Reset
@@ -498,5 +710,23 @@ struct ProfileView: View {
 
         Haptics.medium()
         dismiss()
+    }
+}
+
+// MARK: - Int formatting
+
+private extension Int {
+    /// Comma-separated below 10M, shorthand above (10.2M, 1.3B).
+    var chipFormatted: String {
+        let a = Swift.abs(self)
+        let sign = self < 0 ? "-" : ""
+        switch a {
+        case 0..<10_000_000:
+            return self.formatted()          // e.g. 1,234,567
+        case 10_000_000..<1_000_000_000:
+            return "\(sign)\(String(format: "%.1f", Double(a) / 1_000_000))M"
+        default:
+            return "\(sign)\(String(format: "%.1f", Double(a) / 1_000_000_000))B"
+        }
     }
 }

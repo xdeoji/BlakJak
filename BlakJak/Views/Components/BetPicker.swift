@@ -88,11 +88,18 @@ struct BetPicker: View {
 
             // Custom + All In
             HStack(spacing: 6) {
-                // Custom — tap to select, long press to edit
+                // Custom — tap to select, tap again (or long press) to edit
                 Button {
-                    let clamped = min(customAmount, balance)
-                    if clamped >= 10 {
-                        amount = clamped
+                    if amount == min(customAmount, balance) {
+                        Haptics.medium()
+                        withAnimation(.easeOut(duration: 0.25)) {
+                            isEditingCustom = true
+                        }
+                    } else {
+                        let clamped = min(customAmount, balance)
+                        if clamped >= 10 {
+                            amount = clamped
+                        }
                     }
                 } label: {
                     VStack(spacing: 1) {

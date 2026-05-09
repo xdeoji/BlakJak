@@ -31,7 +31,6 @@
 		8DF8D69E578904CB6FA99F33 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2760F91A510D046D56D2A552 /* Card.swift */; };
 		A24F7DEDFA944CCA3BFFFF59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */; };
 		AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001AA000001AA000001 /* DailyBonusStore.swift */; };
-		BB000002BB000002BB000002 /* BankStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001BB000001BB000001 /* BankStore.swift */; };
 		AA000004AA000004AA000004 /* ChipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AA000003AA000003 /* ChipStore.swift */; };
 		AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000005AA000005AA000005 /* RewardedAdManager.swift */; };
 		AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000007AA000007AA000007 /* BrokeSheet.swift */; };
@@ -41,6 +40,7 @@
 		B81A94EEEAF4ED0631EAB741 /* BetPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3079EF1B1B88D10C6AE1E8F4 /* BetPicker.swift */; };
 		BA08B62C321E31715F77F7AB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D939679CAA4119AC0443C8 /* ProfileView.swift */; };
 		BAD42427B1953608FC3F86EF /* CasinoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8365136D86FCF3BAF00FAAF /* CasinoTheme.swift */; };
+		BB000002BB000002BB000002 /* BankStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001BB000001BB000001 /* BankStore.swift */; };
 		C28A375A10A07B0132D8D519 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18649F2C1FC91764EEE830 /* FeedView.swift */; };
 		DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */; };
 		E4FF6109DF14A8E5C3D83562 /* StatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C94C5A8305C2A9F75FE78A /* StatsStore.swift */; };
@@ -77,12 +77,12 @@
 		A1136E5C7AF958641AE92479 /* BuyInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInButton.swift; sourceTree = "<group>"; };
 		A62482A310A0A5B1DC8B9148 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		AA000001AA000001AA000001 /* DailyBonusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusStore.swift; sourceTree = "<group>"; };
-		BB000001BB000001BB000001 /* BankStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankStore.swift; sourceTree = "<group>"; };
 		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
 		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
 		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
 		AA000009AA000009AA000009 /* DailyBonusSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusSheet.swift; sourceTree = "<group>"; };
 		AD54EE5B88722F32001C0AD7 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		BB000001BB000001BB000001 /* BankStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankStore.swift; sourceTree = "<group>"; };
 		C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		C8365136D86FCF3BAF00FAAF /* CasinoTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasinoTheme.swift; sourceTree = "<group>"; };
 		CB18649F2C1FC91764EEE830 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2630;
 			};
 			buildConfigurationList = 07FA2926E326C092F74F8E6C /* Build configuration list for PBXProject "BlakJak" */;
 			developmentRegion = en;
@@ -416,8 +416,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = B55W8NBAHD;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -431,6 +433,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
@@ -444,7 +447,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B55W8NBAHD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BlakJak;
@@ -497,8 +499,10 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = B55W8NBAHD;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -519,6 +523,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
@@ -532,7 +537,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B55W8NBAHD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BlakJak;

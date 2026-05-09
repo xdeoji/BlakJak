@@ -102,31 +102,36 @@ struct FeedView: View {
             .padding(.top, 8)
 
             // Bottom wager overlay
-            if currentHandIsPlayable {
-                VStack {
-                    Spacer()
-                    BetPicker(amount: $walletVM.betAmount, balance: walletVM.balance) {
-                        guard let hand = currentHand,
-                              walletVM.betAmount <= walletVM.balance else { return }
-                        Haptics.heavy()
-                        SoundManager.shared.buyIn()
-                        let bet = walletVM.betAmount
-                        walletVM.deduct(bet)
-                        walletVM.isInGame = true
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            activeGame = ActiveGame(hand: hand, betAmount: bet)
+            VStack {
+                Spacer()
+                if currentHandIsPlayable {
+                    if walletVM.isBroke {
+                        topUpFooter
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    } else {
+                        BetPicker(amount: $walletVM.betAmount, balance: walletVM.balance) {
+                            guard let hand = currentHand,
+                                  walletVM.betAmount <= walletVM.balance else { return }
+                            Haptics.heavy()
+                            SoundManager.shared.buyIn()
+                            let bet = walletVM.betAmount
+                            walletVM.deduct(bet)
+                            walletVM.isInGame = true
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                activeGame = ActiveGame(hand: hand, betAmount: bet)
+                            }
                         }
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
-                }
-                .ignoresSafeArea(.keyboard)
-                .transition(.move(edge: .bottom))
-            } else if let hand = currentHand, feedVM.isPlayed(hand.id), activeGame == nil {
-                VStack {
-                    Spacer()
+                } else if let hand = currentHand, feedVM.isPlayed(hand.id), activeGame == nil {
                     playedFooter
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-                .transition(.move(edge: .bottom))
             }
+            .ignoresSafeArea(.keyboard)
+            .animation(.spring(response: 0.35, dampingFraction: 0.85), value: currentHandIsPlayable)
+            .animation(.spring(response: 0.35, dampingFraction: 0.85), value: currentPage)
+            .animation(.spring(response: 0.35, dampingFraction: 0.85), value: walletVM.isBroke)
         }
         .preferredColorScheme(.dark)
         .onAppear {
@@ -165,6 +170,26 @@ struct FeedView: View {
                 .presentationDetents([.height(280)])
                 .presentationDragIndicator(.hidden)
         }
+    }
+
+    private var topUpFooter: some View {
+        Button { showBrokeSheet = true } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 14))
+                    .foregroundColor(CasinoTheme.accent)
+                Text("Top Up to Play")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(CasinoTheme.accent)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 20)
+            .background(
+                CasinoTheme.bgCard
+                    .overlay(Rectangle().fill(CasinoTheme.border).frame(height: 1), alignment: .top)
+            )
+        }
+        .buttonStyle(.plain)
     }
 
     private var playedFooter: some View {
