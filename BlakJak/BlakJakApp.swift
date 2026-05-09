@@ -3,7 +3,13 @@ import SwiftUI
 @main
 struct BlakJakApp: App {
     @State private var showOnboarding = !SettingsStore.hasOnboarded
-    @State private var iCloudAvailable = FileManager.default.ubiquityIdentityToken != nil
+    @State private var iCloudAvailable: Bool = {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return FileManager.default.ubiquityIdentityToken != nil
+        #endif
+    }()
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
@@ -26,7 +32,11 @@ struct BlakJakApp: App {
             case .active:
                 // Re-check iCloud each time app becomes active — user may have signed in via Settings
                 withAnimation(.easeOut(duration: 0.3)) {
+                    #if targetEnvironment(simulator)
+                    iCloudAvailable = true
+                    #else
                     iCloudAvailable = FileManager.default.ubiquityIdentityToken != nil
+                    #endif
                 }
                 guard iCloudAvailable else { return }
                 NSUbiquitousKeyValueStore.default.synchronize()
