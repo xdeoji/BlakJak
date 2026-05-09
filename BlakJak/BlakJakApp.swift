@@ -21,6 +21,7 @@ struct BlakJakApp: App {
         .onChange(of: scenePhase) { _, newPhase in
             switch newPhase {
             case .active:
+                NSUbiquitousKeyValueStore.default.synchronize()
                 IntegrityMonitor.checkClock()
                 AnalyticsManager.shared.startSession(balance: WalletStore.balance)
             case .background:

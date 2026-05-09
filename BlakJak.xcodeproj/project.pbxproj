@@ -85,6 +85,7 @@
 		DD000000DD000000DD000000 /* ObfuscatedInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedInt.swift; sourceTree = "<group>"; };
 		DD000002DD000002DD000002 /* IntegrityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrityMonitor.swift; sourceTree = "<group>"; };
 		DD000006DD000006DD000006 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		EE000001EE000001EE000001 /* BlakJak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlakJak.entitlements; sourceTree = "<group>"; };
 		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
 		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
 		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
@@ -211,6 +212,7 @@
 			children = (
 				130CBF49B62F73BA09B65350 /* Assets.xcassets */,
 				01AEE01FAFCAC4CB94BF95A6 /* BlakJakApp.swift */,
+				EE000001EE000001EE000001 /* BlakJak.entitlements */,
 				CC000002CC000002CC000002 /* Analytics */,
 				CE691C9C040790904981C666 /* Engine */,
 				DD000004DD000004DD000004 /* Security */,
@@ -477,6 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BlakJak/BlakJak.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -567,6 +570,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BlakJak/BlakJak.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
