@@ -119,6 +119,7 @@ struct BrokeSheet: View {
                         Spacer().frame(height: 20)
                     }
                     .padding(.horizontal, 24)
+                    .padding(.bottom)   // accounts for home indicator / safe area on all devices
                 }
             }
         }
