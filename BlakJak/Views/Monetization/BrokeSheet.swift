@@ -57,8 +57,10 @@ struct BrokeSheet: View {
                                     chipLabel: "+\(DailyBonusStore.bonusAmount.formatted())",
                                     color: CasinoTheme.success
                                 ) {
+                                    let bonus = DailyBonusStore.bonusAmount
                                     DailyBonusStore.claim()
-                                    walletVM.credit(DailyBonusStore.bonusAmount)
+                                    walletVM.credit(bonus)
+                                    AnalyticsManager.shared.trackBonusClaimed(chips: bonus, balance: walletVM.balance)
                                     dailyAvailable = false
                                     Haptics.heavy()
                                     onDismiss()

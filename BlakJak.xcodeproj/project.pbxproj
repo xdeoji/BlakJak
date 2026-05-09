@@ -31,7 +31,6 @@
 		8DF8D69E578904CB6FA99F33 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2760F91A510D046D56D2A552 /* Card.swift */; };
 		A24F7DEDFA944CCA3BFFFF59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */; };
 		AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001AA000001AA000001 /* DailyBonusStore.swift */; };
-		FF000001FF000001FF000001 /* iCloudRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000000FF000000FF000000 /* iCloudRequiredView.swift */; };
 		AA000004AA000004AA000004 /* ChipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AA000003AA000003 /* ChipStore.swift */; };
 		AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000005AA000005AA000005 /* RewardedAdManager.swift */; };
 		AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000007AA000007AA000007 /* BrokeSheet.swift */; };
@@ -53,6 +52,8 @@
 		E891450F6AE46636AFB8D85B /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D57FAC85C279358B7753 /* SettingsStore.swift */; };
 		EA6C96F80377DCFA510D69F6 /* HandGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A731453F882F5BE09D6446 /* HandGenerator.swift */; };
 		EBB69288E6E283438059BB4F /* StreakStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00174270811CD59BAEC2E461 /* StreakStore.swift */; };
+		FF000001FF000001FF000001 /* iCloudRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000000FF000000FF000000 /* iCloudRequiredView.swift */; };
+		F46A2C202FAF6C78000CF93B /* PostHog in Frameworks */ = {isa = PBXBuildFile; productRef = F46A2C1F2FAF6C78000CF93B /* PostHog */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,7 +84,6 @@
 		A1136E5C7AF958641AE92479 /* BuyInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInButton.swift; sourceTree = "<group>"; };
 		A62482A310A0A5B1DC8B9148 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		AA000001AA000001AA000001 /* DailyBonusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusStore.swift; sourceTree = "<group>"; };
-		FF000000FF000000FF000000 /* iCloudRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudRequiredView.swift; sourceTree = "<group>"; };
 		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
 		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
 		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
@@ -105,6 +105,7 @@
 		EE000001EE000001EE000001 /* BlakJak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlakJak.entitlements; sourceTree = "<group>"; };
 		F397315D238B2C223E145569 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		F48A9C6A2FAE584E00B6E7CC /* BlakJak.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = BlakJak.storekit; sourceTree = "<group>"; };
+		FF000000FF000000FF000000 /* iCloudRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudRequiredView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -315,6 +316,7 @@
 			buildConfigurationList = 4F19AE9190E98D7E32AED08A /* Build configuration list for PBXNativeTarget "BlakJak" */;
 			buildPhases = (
 				E1533B4741AE6A893BBB35EC /* Sources */,
+				F46A2C212FAF6C78000CF93B /* Frameworks */,
 				B57E54CA049FB07C9E149321 /* Resources */,
 			);
 			buildRules = (
@@ -323,6 +325,7 @@
 			);
 			name = BlakJak;
 			packageProductDependencies = (
+				F46A2C1F2FAF6C78000CF93B /* PostHog */,
 			);
 			productName = BlakJak;
 			productReference = 06E316E198BF1BB55D2606A4 /* BlakJak.app */;
@@ -346,6 +349,9 @@
 			);
 			mainGroup = F9DF23B21F323A9F957C6AE3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F46A2C1E2FAF6C78000CF93B /* XCRemoteSwiftPackageReference "posthog-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AAD53B67B01D71F9F277CC3F /* Products */;
 			projectDirPath = "";
@@ -366,6 +372,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F46A2C212FAF6C78000CF93B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F46A2C202FAF6C78000CF93B /* PostHog in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E1533B4741AE6A893BBB35EC /* Sources */ = {
@@ -622,6 +639,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F46A2C1E2FAF6C78000CF93B /* XCRemoteSwiftPackageReference "posthog-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PostHog/posthog-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.58.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F46A2C1F2FAF6C78000CF93B /* PostHog */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F46A2C1E2FAF6C78000CF93B /* XCRemoteSwiftPackageReference "posthog-ios" */;
+			productName = PostHog;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F110BCEA862CD4EEED14EA72 /* Project object */;
 }

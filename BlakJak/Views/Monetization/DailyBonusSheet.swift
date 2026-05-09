@@ -29,8 +29,10 @@ struct DailyBonusSheet: View {
                 }
 
                 Button {
+                    let bonus = DailyBonusStore.bonusAmount
                     DailyBonusStore.claim()
-                    walletVM.credit(DailyBonusStore.bonusAmount)
+                    walletVM.credit(bonus)
+                    AnalyticsManager.shared.trackBonusClaimed(chips: bonus, balance: walletVM.balance)
                     Haptics.heavy()
                     onDismiss()
                 } label: {

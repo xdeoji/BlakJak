@@ -59,6 +59,11 @@ class ChipStore: ObservableObject {
                 if chips > 0 {
                     walletVM.credit(chips)
                     Haptics.success()
+                    AnalyticsManager.shared.trackChipsPurchased(
+                        productID: product.id,
+                        chips: chips,
+                        balanceBefore: walletVM.balance - chips
+                    )
                 }
                 await transaction.finish()
             case .userCancelled:

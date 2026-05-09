@@ -1,5 +1,6 @@
 import Foundation
 import CryptoKit
+import PostHog
 
 /// Lightweight analytics manager.
 ///
@@ -41,7 +42,21 @@ final class AnalyticsManager {
         return support.appendingPathComponent("blakjak_events.jsonl")
     }()
 
-    private init() {}
+    private let appVersion: String = {
+        let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"
+        let b = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
+        return "\(v) (\(b))"
+    }()
+
+    private init() {
+        let config = PostHogConfig(projectToken: "phc_uJt57srN8moQyzpypA2XdofWCRrJChNcbcZCFozmB8pd",
+                                   host: "https://us.i.posthog.com")
+        config.flushAt = 1
+        config.flushIntervalSeconds = 5
+        config.captureApplicationLifecycleEvents = false
+        config.captureScreenViews = false
+        PostHogSDK.shared.setup(config)
+    }
 
     // MARK: - Session lifecycle
 
@@ -54,8 +69,6 @@ final class AnalyticsManager {
         sessionNetChips = 0
         seq = 0
         prevHash = sessionID   // chain is seeded with the session ID
-
-        // POSTHOG: PostHogSDK.shared.setup(PostHogConfig(apiKey: "YOUR_KEY", host: "https://app.posthog.com"))
     }
 
     func endSession(balance: Int) {
@@ -135,6 +148,25 @@ final class AnalyticsManager {
         ])
     }
 
+    // MARK: - Monetization events
+
+    func trackChipsPurchased(productID: String, chips: Int, balanceBefore: Int) {
+        enqueue("chips_purchased", props: [
+            "session_id": sessionID,
+            "product_id": productID,
+            "chips": chips,
+            "balance_before": balanceBefore
+        ])
+    }
+
+    func trackBonusClaimed(chips: Int, balance: Int) {
+        enqueue("bonus_claimed", props: [
+            "session_id": sessionID,
+            "chips": chips,
+            "balance_after": balance
+        ])
+    }
+
     // MARK: - Queue
 
     private func enqueue(_ name: String, props: [String: Any]) {
@@ -144,6 +176,7 @@ final class AnalyticsManager {
         payload["ts"] = ISO8601DateFormatter().string(from: Date())
         payload["seq"] = seq
         payload["prev_hash"] = prevHash
+        payload["app_version"] = appVersion
 
         // Stable sort keys so the serialized string is deterministic
         guard let data = try? JSONSerialization.data(withJSONObject: payload,
@@ -165,7 +198,7 @@ final class AnalyticsManager {
             try? entry.write(to: queueURL, atomically: true, encoding: .utf8)
         }
 
-        // POSTHOG: PostHogSDK.shared.capture(name, properties: props.mapValues { AnyCodable($0) })
+        PostHogSDK.shared.capture(name, properties: props as [String: Any])
     }
 
     private func sha256(_ string: String) -> String {
