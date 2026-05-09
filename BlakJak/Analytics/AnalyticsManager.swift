@@ -61,6 +61,7 @@ final class AnalyticsManager {
     func endSession(balance: Int) {
         let duration = Int(Date().timeIntervalSince(sessionStartTime))
         let pnl = balance - sessionStartBalance
+        let tamperFlags = IntegrityMonitor.tamperFlags
 
         enqueue("session_ended", props: [
             "session_id": sessionID,
@@ -69,7 +70,10 @@ final class AnalyticsManager {
             "hands_skipped": sessionHandsSkipped,
             "session_pnl": pnl,
             "start_balance": sessionStartBalance,
-            "end_balance": balance
+            "end_balance": balance,
+            "is_jailbroken": IntegrityMonitor.isJailbroken,
+            "clock_rollback": IntegrityMonitor.hasClockRollback,
+            "tamper_flags": tamperFlags.joined(separator: ",")
         ])
     }
 

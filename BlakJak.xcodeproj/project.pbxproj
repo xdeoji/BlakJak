@@ -32,6 +32,8 @@
 		A24F7DEDFA944CCA3BFFFF59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */; };
 		AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001AA000001AA000001 /* DailyBonusStore.swift */; };
 		CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000000CC000000CC000000 /* AnalyticsManager.swift */; };
+		DD000001DD000001DD000001 /* ObfuscatedInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000DD000000DD000000 /* ObfuscatedInt.swift */; };
+		DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002DD000002DD000002 /* IntegrityMonitor.swift */; };
 		AA000004AA000004AA000004 /* ChipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AA000003AA000003 /* ChipStore.swift */; };
 		AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000005AA000005AA000005 /* RewardedAdManager.swift */; };
 		AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000007AA000007AA000007 /* BrokeSheet.swift */; };
@@ -79,6 +81,8 @@
 		A62482A310A0A5B1DC8B9148 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		AA000001AA000001AA000001 /* DailyBonusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusStore.swift; sourceTree = "<group>"; };
 		CC000000CC000000CC000000 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		DD000000DD000000DD000000 /* ObfuscatedInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedInt.swift; sourceTree = "<group>"; };
+		DD000002DD000002DD000002 /* IntegrityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrityMonitor.swift; sourceTree = "<group>"; };
 		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
 		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
 		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
@@ -190,6 +194,15 @@
 			path = Analytics;
 			sourceTree = "<group>";
 		};
+		DD000004DD000004DD000004 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				DD000000DD000000DD000000 /* ObfuscatedInt.swift */,
+				DD000002DD000002DD000002 /* IntegrityMonitor.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
 		98274D7A128BF46577BF63D3 /* BlakJak */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +210,7 @@
 				01AEE01FAFCAC4CB94BF95A6 /* BlakJakApp.swift */,
 				CC000002CC000002CC000002 /* Analytics */,
 				CE691C9C040790904981C666 /* Engine */,
+				DD000004DD000004DD000004 /* Security */,
 				7C09DE8FE064A54084D0F945 /* Models */,
 				736D32D0D690CD82C87CD3FD /* Persistence */,
 				AA00000BAA00000BAA00000B /* Store */,
@@ -382,6 +396,8 @@
 				DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */,
 				AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */,
 				CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */,
+				DD000001DD000001DD000001 /* ObfuscatedInt.swift in Sources */,
+				DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */,
 				BB000002BB000002BB000002 /* BankStore.swift in Sources */,
 				AA000004AA000004AA000004 /* ChipStore.swift in Sources */,
 				AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */,

@@ -21,6 +21,7 @@ struct BlakJakApp: App {
         .onChange(of: scenePhase) { _, newPhase in
             switch newPhase {
             case .active:
+                IntegrityMonitor.checkClock()
                 AnalyticsManager.shared.startSession(balance: WalletStore.balance)
             case .background:
                 AnalyticsManager.shared.endSession(balance: WalletStore.balance)
