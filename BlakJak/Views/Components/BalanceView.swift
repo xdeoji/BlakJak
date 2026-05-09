@@ -10,9 +10,6 @@ struct BalanceView: View {
                 .font(.system(size: 15, weight: .medium, design: .monospaced))
                 .foregroundColor(.white)
                 .contentTransition(.numericText())
-            Text("pts")
-                .font(.system(size: 12, weight: .regular))
-                .foregroundColor(CasinoTheme.textTertiary)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)

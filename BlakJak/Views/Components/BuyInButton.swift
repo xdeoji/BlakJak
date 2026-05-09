@@ -11,7 +11,7 @@ struct BuyInButton: View {
                     .font(.system(size: 16, weight: .semibold))
                 Text("·")
                     .foregroundColor(.white.opacity(0.3))
-                Text("\(amount) pts")
+                Text("\(amount)")
                     .font(.system(size: 16, weight: .medium, design: .monospaced))
             }
             .foregroundColor(.black)

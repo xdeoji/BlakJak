@@ -328,7 +328,7 @@ struct InlineGameView: View {
 
             if finalPayout > 0 {
                 VStack(spacing: 4) {
-                    Text("+\(gameVM.payout) pts")
+                    Text("+\(gameVM.payout)")
                         .font(.system(size: 16, weight: .medium, design: .monospaced))
                         .foregroundColor(CasinoTheme.textSecondary)
 

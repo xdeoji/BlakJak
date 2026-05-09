@@ -108,9 +108,6 @@ struct ProfileView: View {
                 .font(.system(size: 36, weight: .bold, design: .monospaced))
                 .foregroundColor(pnlColor)
 
-            Text("pts")
-                .font(.system(size: 13, weight: .regular))
-                .foregroundColor(CasinoTheme.textTertiary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 24)

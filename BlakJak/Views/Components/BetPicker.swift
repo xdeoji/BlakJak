@@ -143,7 +143,7 @@ struct BetPicker: View {
 
     private var buyInRow: some View {
         Button(action: onBuyIn) {
-            Text("Buy In · \(amount) pts")
+            Text("Buy In · \(amount)")
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundColor(.black)
                 .frame(maxWidth: .infinity)
