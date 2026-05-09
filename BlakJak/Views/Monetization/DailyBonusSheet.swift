@@ -23,6 +23,9 @@ struct DailyBonusSheet: View {
                     Text("+\(DailyBonusStore.bonusAmount) free chips")
                         .font(.system(size: 15, weight: .regular, design: .monospaced))
                         .foregroundColor(CasinoTheme.textTertiary)
+                    Text("available every hour")
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(CasinoTheme.textTertiary.opacity(0.6))
                 }
 
                 Button {

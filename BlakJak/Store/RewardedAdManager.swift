@@ -23,7 +23,7 @@ class RewardedAdManager: ObservableObject {
 
     static let chipReward = 100
 
-    @Published var isAdAvailable = true   // stub: always ready
+    @Published var isAdAvailable = false  // disabled until AppLovin MAX is integrated
     @Published var isLoadingAd = false
 
     func showAd(onReward: @escaping () -> Void, onDismiss: @escaping () -> Void) {

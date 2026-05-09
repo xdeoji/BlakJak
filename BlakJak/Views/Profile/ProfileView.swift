@@ -4,6 +4,7 @@ struct ProfileView: View {
     @ObservedObject var walletVM: WalletViewModel
     @ObservedObject var streakVM: StreakViewModel
     @StateObject private var statsVM = StatsViewModel()
+    @State private var bankBalance = BankStore.balance
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -15,9 +16,6 @@ struct ProfileView: View {
                     // Header
                     header
 
-                    // Risk Profile Card
-                    riskProfileCard
-
                     // PnL
                     pnlCard
 
@@ -26,6 +24,9 @@ struct ProfileView: View {
 
                     // Win/Loss breakdown
                     outcomeBar
+
+                    // Bank
+                    bankCard
 
                     // Streaks
                     streakSettings
@@ -355,6 +356,95 @@ struct ProfileView: View {
         )
     }
 
+    // MARK: - Bank
+
+    @State private var showWithdrawConfirm = false
+
+    private var bankCard: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("BANK")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(CasinoTheme.textTertiary)
+                .tracking(1.5)
+
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("\(bankBalance.formatted()) pts")
+                        .font(.system(size: 24, weight: .bold, design: .monospaced))
+                        .foregroundColor(.white)
+                    Text("Saved chips — not lost on reset")
+                        .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(CasinoTheme.textTertiary)
+                }
+                Spacer()
+            }
+
+            HStack(spacing: 10) {
+                // Deposit
+                Button {
+                    guard walletVM.balance > 0 else { return }
+                    let amount = walletVM.balance
+                    BankStore.balance += amount
+                    bankBalance = BankStore.balance
+                    walletVM.credit(-amount)
+                    Haptics.medium()
+                } label: {
+                    Label("Deposit All", systemImage: "arrow.down.circle")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(CasinoTheme.success)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(CasinoTheme.success.opacity(0.1))
+                                .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(CasinoTheme.success.opacity(0.25), lineWidth: 1))
+                        )
+                }
+                .buttonStyle(.plain)
+                .disabled(walletVM.balance <= 0)
+                .opacity(walletVM.balance <= 0 ? 0.4 : 1)
+
+                // Withdraw
+                Button {
+                    showWithdrawConfirm = true
+                } label: {
+                    Label("Withdraw", systemImage: "arrow.up.circle")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(CasinoTheme.warning)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(CasinoTheme.warning.opacity(0.1))
+                                .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(CasinoTheme.warning.opacity(0.25), lineWidth: 1))
+                        )
+                }
+                .buttonStyle(.plain)
+                .disabled(bankBalance <= 0)
+                .opacity(bankBalance <= 0 ? 0.4 : 1)
+                .confirmationDialog("Withdraw \(bankBalance.formatted()) chips?", isPresented: $showWithdrawConfirm, titleVisibility: .visible) {
+                    Button("Withdraw All") {
+                        let amount = BankStore.balance
+                        BankStore.balance = 0
+                        bankBalance = 0
+                        walletVM.credit(amount)
+                        Haptics.medium()
+                    }
+                } message: {
+                    Text("This will move all banked chips back to your wallet.")
+                }
+            }
+        }
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(CasinoTheme.bgCard)
+                .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(CasinoTheme.border, lineWidth: 1))
+        )
+    }
+
+    // MARK: - Reset
+
     @State private var showResetConfirm = false
 
     private var resetButton: some View {
@@ -385,22 +475,18 @@ struct ProfileView: View {
                 )
             }
             .buttonStyle(.plain)
-            .confirmationDialog("Reset everything?", isPresented: $showResetConfirm, titleVisibility: .visible) {
+            .confirmationDialog("Reset stats?", isPresented: $showResetConfirm, titleVisibility: .visible) {
                 Button("Reset", role: .destructive) {
                     resetAll()
                 }
             } message: {
-                Text("This will reset your balance to 1,000, clear all stats, streaks, and history. This cannot be undone.")
+                Text("This will clear all stats and streaks. Your balance and bank are not affected.")
             }
         }
     }
 
     private func resetAll() {
-        // Balance
-        WalletStore.balance = 1000
-        walletVM.balance = 1000
-
-        // Stats
+        // Stats only — balance and bank are intentionally preserved
         StatsStore.records = []
         statsVM.reload()
 
@@ -409,8 +495,6 @@ struct ProfileView: View {
         StreakStore.lossStreak = 0
         streakVM.winStreak = 0
         streakVM.lossStreak = 0
-
-        // Settings stay as-is
 
         Haptics.medium()
         dismiss()

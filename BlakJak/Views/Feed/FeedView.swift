@@ -120,6 +120,12 @@ struct FeedView: View {
                 }
                 .ignoresSafeArea(.keyboard)
                 .transition(.move(edge: .bottom))
+            } else if let hand = currentHand, feedVM.isPlayed(hand.id), activeGame == nil {
+                VStack {
+                    Spacer()
+                    playedFooter
+                }
+                .transition(.move(edge: .bottom))
             }
         }
         .preferredColorScheme(.dark)
@@ -159,5 +165,22 @@ struct FeedView: View {
                 .presentationDetents([.height(280)])
                 .presentationDragIndicator(.hidden)
         }
+    }
+
+    private var playedFooter: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 14))
+                .foregroundColor(CasinoTheme.textTertiary)
+            Text("Hand Played")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundColor(CasinoTheme.textTertiary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 20)
+        .background(
+            CasinoTheme.bgCard
+                .overlay(Rectangle().fill(CasinoTheme.border).frame(height: 1), alignment: .top)
+        )
     }
 }

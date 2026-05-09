@@ -2,15 +2,15 @@ import StoreKit
 
 // Product IDs must match what you create in App Store Connect
 enum ChipProductID: String, CaseIterable {
-    case small  = "blakjak.chips.1000"
-    case medium = "blakjak.chips.5000"
-    case large  = "blakjak.chips.15000"
+    case small  = "blakjak.chips.10000"
+    case medium = "blakjak.chips.50000"
+    case large  = "blakjak.chips.150000"
 
     var chips: Int {
         switch self {
-        case .small:  return 1_000
-        case .medium: return 5_000
-        case .large:  return 15_000
+        case .small:  return 10_000
+        case .medium: return 50_000
+        case .large:  return 150_000
         }
     }
 }
