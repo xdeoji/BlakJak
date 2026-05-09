@@ -42,6 +42,7 @@
 		BA08B62C321E31715F77F7AB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D939679CAA4119AC0443C8 /* ProfileView.swift */; };
 		BAD42427B1953608FC3F86EF /* CasinoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8365136D86FCF3BAF00FAAF /* CasinoTheme.swift */; };
 		BB000002BB000002BB000002 /* BankStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001BB000001BB000001 /* BankStore.swift */; };
+		BB000004BB000004BB000004 /* WagerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000003BB000003BB000003 /* WagerStore.swift */; };
 		C28A375A10A07B0132D8D519 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18649F2C1FC91764EEE830 /* FeedView.swift */; };
 		CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000000CC000000CC000000 /* AnalyticsManager.swift */; };
 		DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */; };
@@ -89,6 +90,7 @@
 		AA000009AA000009AA000009 /* DailyBonusSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusSheet.swift; sourceTree = "<group>"; };
 		AD54EE5B88722F32001C0AD7 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		BB000001BB000001BB000001 /* BankStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankStore.swift; sourceTree = "<group>"; };
+		BB000003BB000003BB000003 /* WagerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WagerStore.swift; sourceTree = "<group>"; };
 		C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		C8365136D86FCF3BAF00FAAF /* CasinoTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasinoTheme.swift; sourceTree = "<group>"; };
 		CB18649F2C1FC91764EEE830 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			children = (
 				AA000001AA000001AA000001 /* DailyBonusStore.swift */,
 				BB000001BB000001BB000001 /* BankStore.swift */,
+				BB000003BB000003BB000003 /* WagerStore.swift */,
 				8EE4D57FAC85C279358B7753 /* SettingsStore.swift */,
 				95C94C5A8305C2A9F75FE78A /* StatsStore.swift */,
 				00174270811CD59BAEC2E461 /* StreakStore.swift */,
@@ -409,6 +412,7 @@
 				DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */,
 				DD000005DD000005DD000005 /* KeychainHelper.swift in Sources */,
 				BB000002BB000002BB000002 /* BankStore.swift in Sources */,
+				BB000004BB000004BB000004 /* WagerStore.swift in Sources */,
 				AA000004AA000004AA000004 /* ChipStore.swift in Sources */,
 				AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */,
 				AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */,

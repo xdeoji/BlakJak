@@ -435,6 +435,9 @@ struct InlineGameView: View {
                 timestamp: Date()
             ))
 
+            // Lifetime wager tracking (scales hourly bonus)
+            WagerStore.add(gameVM.totalBet)
+
             // Analytics
             let netChips = payout - gameVM.totalBet
             AnalyticsManager.shared.trackHandCompleted(

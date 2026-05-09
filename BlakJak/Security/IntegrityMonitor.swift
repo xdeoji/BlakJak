@@ -5,6 +5,7 @@ struct IntegrityMonitor {
 
     enum TamperType: String {
         case balanceChecksum = "balance_checksum"
+        case wagerChecksum   = "wager_checksum"
         case memoryPatch     = "memory_patch"
         case clockRollback   = "clock_rollback"
     }
@@ -96,8 +97,8 @@ struct IntegrityMonitor {
         return new
     }
 
-    static func checksum(for balance: Int) -> String {
-        let raw = "\(balance):\(stableDeviceKey):\(salt)"
+    static func checksum(for value: Int, domain: String = "wallet") -> String {
+        let raw = "\(value):\(stableDeviceKey):\(salt):\(domain)"
         let digest = SHA256.hash(data: Data(raw.utf8))
         return digest.map { String(format: "%02x", $0) }.joined()
     }

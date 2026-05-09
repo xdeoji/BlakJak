@@ -52,7 +52,7 @@ struct WalletStore {
     private static func writeLocal(_ value: Int) {
         let dict: [String: Any] = [
             "balance":  value,
-            "checksum": IntegrityMonitor.checksum(for: value)
+            "checksum": IntegrityMonitor.checksum(for: value, domain: "wallet")
         ]
         UserDefaults.standard.set(dict, forKey: localKey)
     }
@@ -61,7 +61,7 @@ struct WalletStore {
         guard let dict = UserDefaults.standard.dictionary(forKey: localKey),
               let val = dict["balance"] as? Int,
               let ck  = dict["checksum"] as? String else { return 0 }
-        if ck != IntegrityMonitor.checksum(for: val) {
+        if ck != IntegrityMonitor.checksum(for: val, domain: "wallet") {
             IntegrityMonitor.flagTamper(.balanceChecksum)
         }
         return val
