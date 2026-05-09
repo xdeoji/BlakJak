@@ -67,7 +67,7 @@ You may request deletion of any analytics data associated with your device by co
 
 If you have questions about this policy, contact us at:
 
-**Email:** privacy@blakjak.app  
+**Email:** root@deoji.dev  
 **GitHub:** github.com/xdeoji/BlakJak
 
 ---
