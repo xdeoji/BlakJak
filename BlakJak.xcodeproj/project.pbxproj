@@ -31,6 +31,7 @@
 		8DF8D69E578904CB6FA99F33 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2760F91A510D046D56D2A552 /* Card.swift */; };
 		A24F7DEDFA944CCA3BFFFF59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */; };
 		AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001AA000001AA000001 /* DailyBonusStore.swift */; };
+		FF000001FF000001FF000001 /* iCloudRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF000000FF000000FF000000 /* iCloudRequiredView.swift */; };
 		AA000004AA000004AA000004 /* ChipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AA000003AA000003 /* ChipStore.swift */; };
 		AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000005AA000005AA000005 /* RewardedAdManager.swift */; };
 		AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000007AA000007AA000007 /* BrokeSheet.swift */; };
@@ -81,6 +82,7 @@
 		A1136E5C7AF958641AE92479 /* BuyInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInButton.swift; sourceTree = "<group>"; };
 		A62482A310A0A5B1DC8B9148 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		AA000001AA000001AA000001 /* DailyBonusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusStore.swift; sourceTree = "<group>"; };
+		FF000000FF000000FF000000 /* iCloudRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudRequiredView.swift; sourceTree = "<group>"; };
 		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
 		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
 		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		165452F01B21200C0D5DED01 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FF000000FF000000FF000000 /* iCloudRequiredView.swift */,
 				E65BDE3F2ADA77F6EEA010AB /* Components */,
 				3D3DE18D5EDE1574A7E85814 /* Feed */,
 				5956591D766DD8DADBA26E98 /* Game */,
@@ -401,6 +404,7 @@
 				DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */,
 				AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */,
 				CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */,
+				FF000001FF000001FF000001 /* iCloudRequiredView.swift in Sources */,
 				DD000001DD000001DD000001 /* ObfuscatedInt.swift in Sources */,
 				DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */,
 				DD000005DD000005DD000005 /* KeychainHelper.swift in Sources */,
