@@ -15,6 +15,7 @@ class GameViewModel: ObservableObject {
     @Published var isSplit: Bool = false
     @Published var handOutcomes: [GameOutcome?] = [nil]
     @Published var tookAction: [Bool]  // true if player hit/doubled/split on this hand
+    @Published var actionLog: [String] = []  // ordered list of player actions for analytics
 
     let betAmount: Int
     let multiplier: Double
@@ -118,6 +119,7 @@ class GameViewModel: ObservableObject {
     func hit() {
         guard phase == .playerTurn, BlackjackRules.canHit(activeHand) else { return }
         tookAction[activeHandIndex] = true
+        actionLog.append("hit")
         Haptics.tap()
         SoundManager.shared.cardDeal()
 
@@ -139,6 +141,7 @@ class GameViewModel: ObservableObject {
 
     func stand() {
         guard phase == .playerTurn else { return }
+        actionLog.append("stand")
         Haptics.medium()
         advanceOrDealerTurn()
     }
@@ -149,6 +152,7 @@ class GameViewModel: ObservableObject {
 
         isDoubledDown[activeHandIndex] = true
         tookAction[activeHandIndex] = true
+        actionLog.append("double")
         extraDeduction += betAmount
         Haptics.heavy()
         SoundManager.shared.cardDeal()
@@ -174,6 +178,7 @@ class GameViewModel: ObservableObject {
               BlackjackRules.canSplit(activeHand) else { return }
 
         isSplit = true
+        actionLog.append("split")
         extraDeduction += betAmount
         Haptics.heavy()
         SoundManager.shared.cardDeal()

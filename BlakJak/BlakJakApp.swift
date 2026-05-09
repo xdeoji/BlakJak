@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct BlakJakApp: App {
     @State private var showOnboarding = !SettingsStore.hasOnboarded
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -15,6 +16,16 @@ struct BlakJakApp: App {
                 }
             } else {
                 FeedView()
+            }
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            switch newPhase {
+            case .active:
+                AnalyticsManager.shared.startSession(balance: WalletStore.balance)
+            case .background:
+                AnalyticsManager.shared.endSession(balance: WalletStore.balance)
+            default:
+                break
             }
         }
     }

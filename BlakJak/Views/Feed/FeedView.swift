@@ -11,6 +11,7 @@ struct FeedView: View {
     @State private var showDailyBonus = false
     @State private var activeGame: ActiveGame?
     @State private var currentPage = 0
+    @State private var previousPage = 0
 
     struct ActiveGame {
         let hand: BlackjackHand
@@ -43,6 +44,22 @@ struct FeedView: View {
             .ignoresSafeArea()
             .onChange(of: currentPage) { _, newPage in
                 feedVM.loadMoreIfNeeded(currentIndex: newPage)
+
+                // Skip detection: player scrolled forward past an unplayed, non-active hand
+                if newPage > previousPage && activeGame == nil {
+                    let skippedIndex = previousPage
+                    if skippedIndex < feedVM.hands.count {
+                        let skippedHand = feedVM.hands[skippedIndex]
+                        if !feedVM.isPlayed(skippedHand.id) {
+                            feedVM.recordSkip(skippedHand)
+                            AnalyticsManager.shared.trackHandSkipped(
+                                hand: skippedHand,
+                                consecutiveSkips: feedVM.consecutiveSkips
+                            )
+                        }
+                    }
+                }
+                previousPage = newPage
             }
 
             // Game overlay
@@ -115,8 +132,18 @@ struct FeedView: View {
                             Haptics.heavy()
                             SoundManager.shared.buyIn()
                             let bet = walletVM.betAmount
+                            let balanceBefore = walletVM.balance
+                            let skipsBefore = feedVM.consecutiveSkips
+                            let wasSkipped = feedVM.wasSkipped(hand)
                             walletVM.deduct(bet)
                             walletVM.isInGame = true
+                            AnalyticsManager.shared.trackHandStarted(
+                                hand: hand,
+                                betAmount: bet,
+                                balance: balanceBefore,
+                                consecutiveSkipsBefore: skipsBefore,
+                                returnedToSkipped: wasSkipped
+                            )
                             withAnimation(.easeOut(duration: 0.2)) {
                                 activeGame = ActiveGame(hand: hand, betAmount: bet)
                             }

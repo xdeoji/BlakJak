@@ -411,12 +411,20 @@ struct InlineGameView: View {
             // Record stats
             let wasWin: Bool
             let wasPush: Bool
+            let outcomeString: String
             if case .resolved(let outcome) = gameVM.phase {
                 wasWin = outcome == .playerWins || outcome == .playerBlackjack
                 wasPush = outcome == .push
+                switch outcome {
+                case .playerWins:     outcomeString = "win"
+                case .playerBlackjack: outcomeString = "blackjack"
+                case .playerLoses:    outcomeString = "loss"
+                case .push:           outcomeString = "push"
+                }
             } else {
                 wasWin = false
                 wasPush = false
+                outcomeString = "unknown"
             }
             StatsStore.record(HandRecord(
                 betAmount: gameVM.totalBet,
@@ -426,6 +434,16 @@ struct InlineGameView: View {
                 wasPush: wasPush,
                 timestamp: Date()
             ))
+
+            // Analytics
+            let netChips = payout - gameVM.totalBet
+            AnalyticsManager.shared.trackHandCompleted(
+                hand: hand,
+                betAmount: gameVM.totalBet,
+                netChips: netChips,
+                outcome: outcomeString,
+                actions: gameVM.actionLog
+            )
         }
     }
 

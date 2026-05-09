@@ -2,6 +2,7 @@ import Foundation
 
 struct SettingsStore {
     private static let riskyConfirmKey = "blakjak_risky_confirm"
+    private static let lifetimeHandCountKey = "blakjak_lifetime_hand_count"
 
     private static let onboardedKey = "blakjak_onboarded"
     private static let customBetKey = "blakjak_custom_bet"
@@ -17,6 +18,13 @@ struct SettingsStore {
             return val > 0 ? val : 50
         }
         set { UserDefaults.standard.set(newValue, forKey: customBetKey) }
+    }
+
+    /// Monotonically increasing count of all hands ever generated — used for lifetime hand IDs.
+    static func incrementAndGetLifetimeHandCount() -> Int {
+        let next = UserDefaults.standard.integer(forKey: lifetimeHandCountKey) + 1
+        UserDefaults.standard.set(next, forKey: lifetimeHandCountKey)
+        return next
     }
 
     /// Confirm before hitting/doubling on 17+

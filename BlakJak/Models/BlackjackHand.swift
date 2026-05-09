@@ -2,6 +2,8 @@ import Foundation
 
 struct BlackjackHand: Identifiable {
     let id: UUID
+    var feedIndex: Int      // position within the current session's feed (1, 2, 3…)
+    var lifetimeIndex: Int  // global position across all sessions, never resets
     let playerCards: [Card]
     let dealerUpcard: Card
     let dealerHoleCard: Card
@@ -18,8 +20,11 @@ struct BlackjackHand: Identifiable {
     var playerIsBusted: Bool { playerHand.isBusted }
 
     init(playerCards: [Card], dealerUpcard: Card, dealerHoleCard: Card,
-         multiplier: Double, winProbability: Double, remainingDeck: Deck) {
+         multiplier: Double, winProbability: Double, remainingDeck: Deck,
+         feedIndex: Int = 0, lifetimeIndex: Int = 0) {
         self.id = UUID()
+        self.feedIndex = feedIndex
+        self.lifetimeIndex = lifetimeIndex
         self.playerCards = playerCards
         self.dealerUpcard = dealerUpcard
         self.dealerHoleCard = dealerHoleCard
