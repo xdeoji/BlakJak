@@ -10,7 +10,7 @@ struct DailyBonusStore {
     }
 
     static var isAvailable: Bool {
-        guard let last = lastClaimed else { return true }
+        guard let last = lastClaimed else { return false }
         return Date().timeIntervalSince(last) >= 3600
     }
 
