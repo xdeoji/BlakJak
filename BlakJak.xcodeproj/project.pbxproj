@@ -31,10 +31,6 @@
 		8DF8D69E578904CB6FA99F33 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2760F91A510D046D56D2A552 /* Card.swift */; };
 		A24F7DEDFA944CCA3BFFFF59 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB754FF2DC8D1AE7648A982 /* OnboardingView.swift */; };
 		AA000002AA000002AA000002 /* DailyBonusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001AA000001AA000001 /* DailyBonusStore.swift */; };
-		CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000000CC000000CC000000 /* AnalyticsManager.swift */; };
-		DD000001DD000001DD000001 /* ObfuscatedInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000DD000000DD000000 /* ObfuscatedInt.swift */; };
-		DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002DD000002DD000002 /* IntegrityMonitor.swift */; };
-		DD000005DD000005DD000005 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000006DD000006DD000006 /* KeychainHelper.swift */; };
 		AA000004AA000004AA000004 /* ChipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000003AA000003AA000003 /* ChipStore.swift */; };
 		AA000006AA000006AA000006 /* RewardedAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000005AA000005AA000005 /* RewardedAdManager.swift */; };
 		AA000008AA000008AA000008 /* BrokeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000007AA000007AA000007 /* BrokeSheet.swift */; };
@@ -46,7 +42,11 @@
 		BAD42427B1953608FC3F86EF /* CasinoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8365136D86FCF3BAF00FAAF /* CasinoTheme.swift */; };
 		BB000002BB000002BB000002 /* BankStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001BB000001BB000001 /* BankStore.swift */; };
 		C28A375A10A07B0132D8D519 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB18649F2C1FC91764EEE830 /* FeedView.swift */; };
+		CC000001CC000001CC000001 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC000000CC000000CC000000 /* AnalyticsManager.swift */; };
 		DBB75A2700ABC75CF85AA517 /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */; };
+		DD000001DD000001DD000001 /* ObfuscatedInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000000DD000000DD000000 /* ObfuscatedInt.swift */; };
+		DD000003DD000003DD000003 /* IntegrityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000002DD000002DD000002 /* IntegrityMonitor.swift */; };
+		DD000005DD000005DD000005 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD000006DD000006DD000006 /* KeychainHelper.swift */; };
 		E4FF6109DF14A8E5C3D83562 /* StatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C94C5A8305C2A9F75FE78A /* StatsStore.swift */; };
 		E891450F6AE46636AFB8D85B /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4D57FAC85C279358B7753 /* SettingsStore.swift */; };
 		EA6C96F80377DCFA510D69F6 /* HandGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A731453F882F5BE09D6446 /* HandGenerator.swift */; };
@@ -81,11 +81,6 @@
 		A1136E5C7AF958641AE92479 /* BuyInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyInButton.swift; sourceTree = "<group>"; };
 		A62482A310A0A5B1DC8B9148 /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		AA000001AA000001AA000001 /* DailyBonusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBonusStore.swift; sourceTree = "<group>"; };
-		CC000000CC000000CC000000 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
-		DD000000DD000000DD000000 /* ObfuscatedInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedInt.swift; sourceTree = "<group>"; };
-		DD000002DD000002DD000002 /* IntegrityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrityMonitor.swift; sourceTree = "<group>"; };
-		DD000006DD000006DD000006 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
-		EE000001EE000001EE000001 /* BlakJak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlakJak.entitlements; sourceTree = "<group>"; };
 		AA000003AA000003AA000003 /* ChipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipStore.swift; sourceTree = "<group>"; };
 		AA000005AA000005AA000005 /* RewardedAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAdManager.swift; sourceTree = "<group>"; };
 		AA000007AA000007AA000007 /* BrokeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokeSheet.swift; sourceTree = "<group>"; };
@@ -95,10 +90,15 @@
 		C6F26049FBB8014754A80AB3 /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		C8365136D86FCF3BAF00FAAF /* CasinoTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasinoTheme.swift; sourceTree = "<group>"; };
 		CB18649F2C1FC91764EEE830 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		CC000000CC000000CC000000 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		D90E2B0706DE03BDF875EA06 /* HandCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandCardView.swift; sourceTree = "<group>"; };
 		D938DC5BD8D69EC42E0F6624 /* StreakBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBanner.swift; sourceTree = "<group>"; };
+		DD000000DD000000DD000000 /* ObfuscatedInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedInt.swift; sourceTree = "<group>"; };
+		DD000002DD000002DD000002 /* IntegrityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrityMonitor.swift; sourceTree = "<group>"; };
+		DD000006DD000006DD000006 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		E406BEB07E5C5A3EE8213EC0 /* WalletStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletStore.swift; sourceTree = "<group>"; };
 		E61C02E141C81F868C57F147 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
+		EE000001EE000001EE000001 /* BlakJak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlakJak.entitlements; sourceTree = "<group>"; };
 		F397315D238B2C223E145569 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		F48A9C6A2FAE584E00B6E7CC /* BlakJak.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = BlakJak.storekit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,24 +189,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		CC000002CC000002CC000002 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				CC000000CC000000CC000000 /* AnalyticsManager.swift */,
-			);
-			path = Analytics;
-			sourceTree = "<group>";
-		};
-		DD000004DD000004DD000004 /* Security */ = {
-			isa = PBXGroup;
-			children = (
-				DD000000DD000000DD000000 /* ObfuscatedInt.swift */,
-				DD000002DD000002DD000002 /* IntegrityMonitor.swift */,
-				DD000006DD000006DD000006 /* KeychainHelper.swift */,
-			);
-			path = Security;
-			sourceTree = "<group>";
-		};
 		98274D7A128BF46577BF63D3 /* BlakJak */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,6 +251,14 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
+		CC000002CC000002CC000002 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				CC000000CC000000CC000000 /* AnalyticsManager.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		CE691C9C040790904981C666 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +267,16 @@
 				4066109115009055A3F656F6 /* ProbabilityEngine.swift */,
 			);
 			path = Engine;
+			sourceTree = "<group>";
+		};
+		DD000004DD000004DD000004 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				DD000000DD000000DD000000 /* ObfuscatedInt.swift */,
+				DD000002DD000002DD000002 /* IntegrityMonitor.swift */,
+				DD000006DD000006DD000006 /* KeychainHelper.swift */,
+			);
+			path = Security;
 			sourceTree = "<group>";
 		};
 		E65BDE3F2ADA77F6EEA010AB /* Components */ = {
@@ -488,11 +488,12 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.blakjak.app;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -579,11 +580,12 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.blakjak.app;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
