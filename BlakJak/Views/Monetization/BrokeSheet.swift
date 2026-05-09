@@ -378,7 +378,7 @@ struct BrokeSheet: View {
             Task { await chipStore.purchase(product, walletVM: walletVM) }
         } label: {
             HStack(spacing: 14) {
-                Image(systemName: "bitcoinsign.circle.fill")
+                Image(systemName: "seal.fill")
                     .font(.system(size: 20))
                     .foregroundColor(CasinoTheme.warning)
                     .frame(width: 40)
