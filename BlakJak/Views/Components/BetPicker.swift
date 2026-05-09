@@ -251,10 +251,9 @@ struct BetPicker: View {
                 customText.removeLast()
             }
         default:
-            // Prevent leading zeros and cap at 6 digits
             if customText == "0" {
                 customText = key
-            } else if customText.count < 6 {
+            } else {
                 customText += key
             }
         }
